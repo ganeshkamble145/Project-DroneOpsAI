@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DroneOps AI — Intelligent Operations Platform</title>
+  <meta name="description" content="Agentic AI operations platform for drone electronics manufacturing with human-in-the-loop decision control.">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: linear-gradient(135deg, #09090b 0%, #0f0f1a 60%, #131325 100%);
+      --glass-bg: rgba(255,255,255,0.04);
+      --glass-border: rgba(255,255,255,0.08);
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --accent: #3b82f6;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --purple: #8b5cf6;
+      --sidebar-w: 270px;
+      --ease: cubic-bezier(0.4,0,0.2,1);
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+    }
+
+    /* ── Sidebar ── */
+    .sidebar {
+      width: var(--sidebar-w);
+      position: fixed; top:0; left:0; height:100vh;
+      background: rgba(8,8,12,0.97);
+      border-right: 1px solid var(--glass-border);
+      display: flex; flex-direction: column;
+      padding: 28px 0;
+      z-index: 100;
+    }
+
+    .brand {
+      display: flex; align-items: center; gap: 12px;
+      padding: 0 28px; margin-bottom: 40px;
+      font-size: 20px; font-weight: 700; letter-spacing: -0.3px;
+      background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+
+    .pulse-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--accent); flex-shrink: 0;
+      box-shadow: 0 0 12px var(--accent);
+      animation: pulse-anim 2s infinite;
+    }
+    @keyframes pulse-anim {
+      0%   { box-shadow: 0 0 0 0 rgba(59,130,246,0.7); }
+      70%  { box-shadow: 0 0 0 8px rgba(59,130,246,0); }
+      100% { box-shadow: 0 0 0 0 rgba(59,130,246,0); }
+    }
+
+    .nav-section { padding: 0 28px; margin-bottom: 8px; }
+    .nav-section-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: rgba(148,163,184,0.5); margin-bottom: 6px; }
+
+    .nav-item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 13px 28px; color: var(--text-muted);
+      cursor: pointer; transition: all 0.2s var(--ease);
+      font-weight: 500; font-size: 14px;
+      border-left: 3px solid transparent;
+      user-select: none;
+    }
+    .nav-item:hover { color: var(--text-main); background: rgba(255,255,255,0.03); }
+    .nav-item.active { color: var(--text-main); background: rgba(59,130,246,0.1); border-left-color: var(--accent); }
+    .nav-item svg { flex-shrink: 0; opacity: 0.7; }
+    .nav-item.active svg { opacity: 1; }
+
+    .sidebar-footer {
+      margin-top: auto; padding: 20px 28px;
+      border-top: 1px solid var(--glass-border);
+    }
+    .user-chip {
+      display: flex; align-items: center; gap: 12px;
+    }
+    .avatar {
+      width: 38px; height: 38px; border-radius: 50%;
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 14px; flex-shrink: 0;
+    }
+
+    /* ── Main Content ── */
+    .main {
+      margin-left: var(--sidebar-w);
+      flex: 1; min-height: 100vh;
+      display: flex; flex-direction: column;
+    }
+
+    .topbar {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(9,9,11,0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--glass-border);
+      padding: 18px 40px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .topbar h2 { font-size: 20px; font-weight: 600; letter-spacing: -0.3px; }
+    .topbar-meta { display: flex; align-items: center; gap: 16px; }
+    .status-chip {
+      display: flex; align-items: center; gap: 6px;
+      background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.2);
+      border-radius: 20px; padding: 6px 14px; font-size: 12px; font-weight: 600; color: var(--success);
+    }
+    .live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--success); animation: pulse-anim 1.5s infinite; }
+
+    .content { padding: 36px 40px; flex: 1; }
+
+    /* ── Cards ── */
+    .grid { display: grid; gap: 24px; margin-bottom: 28px; }
+    .grid-2 { grid-template-columns: repeat(2, 1fr); }
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .col-span-2 { grid-column: span 2; }
+
+    .card {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px; padding: 24px;
+      transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+    }
+    .card:hover { border-color: rgba(255,255,255,0.12); box-shadow: 0 8px 32px rgba(0,0,0,0.35); }
+    .card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+    .card-title { font-size: 14px; font-weight: 600; color: #cbd5e1; display: flex; align-items: center; gap: 8px; }
+
+    /* ── KPI Cards ── */
+    .kpi-card { text-align: center; padding: 28px 20px; }
+    .kpi-value { font-size: 36px; font-weight: 700; line-height: 1; background: linear-gradient(135deg, #fff 0%, #94a3b8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .kpi-label { font-size: 12px; color: var(--text-muted); margin-top: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .kpi-trend { font-size: 12px; margin-top: 4px; font-weight: 600; }
+
+    /* ── Tables ── */
+    .data-table { width: 100%; border-collapse: collapse; }
+    .data-table th { padding: 10px 12px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--text-muted); border-bottom: 1px solid var(--glass-border); white-space: nowrap; }
+    .data-table td { padding: 14px 12px; font-size: 13px; border-bottom: 1px solid rgba(255,255,255,0.04); vertical-align: middle; }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Badges ── */
+    .badge { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 10px; font-size: 11px; font-weight: 700; letter-spacing: 0.3px; white-space: nowrap; }
+    .badge-danger  { background: rgba(239,68,68,0.15);  color: var(--danger);  border: 1px solid rgba(239,68,68,0.25); }
+    .badge-warning { background: rgba(245,158,11,0.15); color: var(--warning); border: 1px solid rgba(245,158,11,0.25); }
+    .badge-success { background: rgba(16,185,129,0.15); color: var(--success); border: 1px solid rgba(16,185,129,0.25); }
+    .badge-accent  { background: rgba(59,130,246,0.15); color: var(--accent);  border: 1px solid rgba(59,130,246,0.25); }
+    .badge-purple  { background: rgba(139,92,246,0.15); color: var(--purple);  border: 1px solid rgba(139,92,246,0.25); }
+    .badge-muted   { background: rgba(148,163,184,0.1); color: var(--text-muted); border: 1px solid rgba(148,163,184,0.15); }
+
+    /* ── AI Recommendation Card ── */
+    .ai-rec-card {
+      background: rgba(59,130,246,0.04);
+      border: 1px solid rgba(59,130,246,0.15);
+      border-radius: 12px; padding: 18px 20px; margin-bottom: 16px;
+      transition: all 0.25s var(--ease);
+    }
+    .ai-rec-card:hover { border-color: rgba(59,130,246,0.25); }
+    .ai-rec-card.accepted { border-color: rgba(16,185,129,0.4); background: rgba(16,185,129,0.05); }
+    .ai-rec-card.rejected { border-color: rgba(239,68,68,0.25); background: rgba(239,68,68,0.03); }
+
+    .ai-rec-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 10px; }
+    .ai-rec-action { font-size: 14px; font-weight: 600; color: var(--text-main); flex: 1; }
+    .ai-rec-meta { font-size: 12px; color: var(--text-muted); margin-bottom: 12px; }
+    .ai-rec-impact {
+      background: rgba(255,255,255,0.04); border-radius: 8px; padding: 10px 14px;
+      font-size: 12px; color: #bfdbfe; margin-bottom: 14px; line-height: 1.6;
+    }
+    .ai-rec-impact strong { color: var(--accent); }
+
+    .decision-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .btn { padding: 8px 18px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s var(--ease); border: 1px solid transparent; letter-spacing: 0.2px; }
+    .btn-accept { background: rgba(16,185,129,0.1); border-color: rgba(16,185,129,0.3); color: var(--success); }
+    .btn-accept:hover { background: rgba(16,185,129,0.2); }
+    .btn-reject { background: rgba(239,68,68,0.07); border-color: rgba(239,68,68,0.25); color: var(--danger); }
+    .btn-reject:hover { background: rgba(239,68,68,0.15); }
+    .btn-alt { background: rgba(245,158,11,0.08); border-color: rgba(245,158,11,0.3); color: var(--warning); font-size: 12px; }
+    .btn-alt:hover { background: rgba(245,158,11,0.15); }
+
+    .confidence-bar { display: flex; align-items: center; gap: 8px; flex: 1; }
+    .bar-track { flex: 1; height: 4px; background: rgba(255,255,255,0.08); border-radius: 2px; max-width: 100px; }
+    .bar-fill  { height: 100%; border-radius: 2px; transition: width 0.4s var(--ease); }
+
+    /* ── Alternative Suggestion ── */
+    .alt-suggestion {
+      margin-top: 12px;
+      background: rgba(245,158,11,0.06);
+      border: 1px solid rgba(245,158,11,0.2);
+      border-radius: 8px; padding: 14px;
+      animation: slide-down 0.3s var(--ease) forwards;
+    }
+    .alt-suggestion .alt-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--warning); margin-bottom: 6px; }
+    .alt-suggestion p { font-size: 13px; color: #fde68a; }
+
+    @keyframes slide-down {
+      from { opacity: 0; transform: translateY(-6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fade-in {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    /* ── Progress Bar ── */
+    .progress-wrap { width: 100%; height: 6px; background: rgba(255,255,255,0.07); border-radius: 3px; overflow: hidden; }
+    .progress-fill { height: 100%; border-radius: 3px; transition: width 0.5s var(--ease); }
+
+    /* ── Alert Strip ── */
+    .alert-strip {
+      display: flex; align-items: flex-start; gap: 14px;
+      padding: 16px 20px; border-radius: 12px; margin-bottom: 12px;
+      border-left: 4px solid;
+    }
+    .alert-strip.crit { background: rgba(239,68,68,0.07); border-color: var(--danger); }
+    .alert-strip.warn { background: rgba(245,158,11,0.06); border-color: var(--warning); }
+    .alert-strip.info { background: rgba(59,130,246,0.06); border-color: var(--accent); }
+    .alert-strip.good { background: rgba(16,185,129,0.06); border-color: var(--success); }
+
+    .alert-strip-icon { font-size: 20px; margin-top: 1px; flex-shrink: 0; }
+    .alert-strip-content { flex: 1; }
+    .alert-strip-title { font-size: 14px; font-weight: 600; }
+    .alert-strip-sub   { font-size: 12px; color: var(--text-muted); margin-top: 3px; }
+    .alert-strip-time  { font-size: 11px; color: var(--text-muted); flex-shrink: 0; margin-top: 2px; }
+
+    .alert-controls { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+
+    /* ── Scrollable ── */
+    .scroll-y { overflow-y: auto; max-height: 420px; }
+    .scroll-y::-webkit-scrollbar { width: 4px; }
+    .scroll-y::-webkit-scrollbar-track { background: transparent; }
+    .scroll-y::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════
+     SIDEBAR
+════════════════════════════════════════════════ -->
+<div class="sidebar">
+  <div class="brand"><div class="pulse-dot"></div>DroneOps AI</div>
+
+  <div class="nav-section">
+    <div class="nav-section-label">Dashboards</div>
+  </div>
+  <div class="nav-item active" id="nav-ops" onclick="navigate('operations', this)">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+    Operations
+  </div>
+  <div class="nav-item" id="nav-sup" onclick="navigate('supply', this)">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+    Supply Chain
+  </div>
+  <div class="nav-item" id="nav-line" onclick="navigate('supervisor', this)">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+    Line Supervisor
+  </div>
+
+  <div class="sidebar-footer">
+    <div class="user-chip">
+      <div class="avatar">SC</div>
+      <div>
+        <div style="font-size:13px;font-weight:600">Sarah Chen</div>
+        <div style="font-size:11px;color:var(--text-muted)">Operations Manager</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════
+     MAIN
+════════════════════════════════════════════════ -->
+<div class="main">
+  <div class="topbar">
+    <h2 id="page-title">Operations Intelligence</h2>
+    <div class="topbar-meta">
+      <div class="status-chip"><div class="live-dot"></div> AI Agent Active</div>
+      <span style="font-size:13px;color:var(--text-muted)">Austin Plant · Shift A</span>
+    </div>
+  </div>
+
+  <div class="content" id="app-container">
+    <p style="color:var(--text-muted)">Initialising…</p>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════
+     DATA + LOGIC
+════════════════════════════════════════════════ -->
+<script src="data.js"></script>
+<script>
+// ── Alternatives DB ─────────────────────────────────────────────────────────
+// Context-aware alternatives generated when user rejects a recommendation.
+// Keyed to the index of each dataset array for each screen.
+
+const OPS_ALTERNATIVES = [
+  "Maintain current worker allocation on Line 3 and schedule a 30-min overtime burst instead to cover the gap.",
+  "Place Machine 4 under enhanced monitoring for 4 hrs before committing to full repair — reduce unnecessary downtime.",
+  "Rather than recalibrating Testing Bay 6 sensor suite, run a shadow-compare with Bay 5 for 2 hrs to isolate the fault.",
+  "Keep current testing parameters intact. Instead, run a dedicated accuracy audit on the last 5 completed batches.",
+  "Defer grid switch to solar until evening off-peak window. Use hybrid mode to balance load with no disruption.",
+  "Source Microcontrollers from Precision Devices as a partial fill order to bridge the 72-hr gap without full commitment.",
+  "Instead of rotation, introduce 15-min micro-breaks every 2 hrs on Shift A to preserve headcount continuity.",
+  "Keep Batch on current routing. Flag Station B as fallback and have buffer stock pre-staged to cut reroute time.",
+  "Fast-track a partial autoclave run today before the full maintenance window to reduce curing defect risk.",
+  "Run CNC Machine 3 back-to-back at 110% capacity to meet deadline before activating the reserve unit."
+];
+
+const SUPPLY_ALTERNATIVES_VENDOR = [
+  "Place a partial trial order (10%) with the flagged vendor to re-evaluate before full cutover.",
+  "Escalate the performance issue directly to the vendor's account manager before reassigning orders.",
+  "Renegotiate SLA terms and impose penalty clauses rather than switching — keeps supplier relationship intact.",
+  "Source a spot-buy from a broker to cover the immediate gap and reassess vendor at next quarter review.",
+  "Split the order: 50% from the flagged vendor, 50% from an alternative to reduce single-point-of-failure risk."
+];
+
+const SUPPLY_ALTERNATIVES_INVENTORY = [
+  "Reduce consumption rate by 12% on non-critical lines and extend current stock by 5 additional days.",
+  "Issue internal re-use directive for partially used components before raising new PO.",
+  "Negotiate an express delivery upgrade from the current supplier rather than raising a new vendor PO.",
+  "Temporarily substitute with a compatible alternative component while awaiting restock.",
+  "Pull from regional buffer stock at the secondary Austin warehouse to avoid emergency PO premium cost."
+];
+
+const ALERT_ALTERNATIVES = {
+  Critical: "Activate secondary backup protocol and have maintenance team on standby. Monitor closely for 30 mins before full shutdown.",
+  Warning:  "Increase monitoring frequency to every 5 minutes and alert supervisor. Defer action until threshold crossed again.",
+  Update:   "Log the update in the shift handover report and reassign the affected task to the next available operator."
+};
+
+const DEFECT_ALTERNATIVES = {
+  High:   "Quarantine the batch and run a 100% statistical re-sampling before escalation. Confirm defect pattern first.",
+  Medium: "Flag the defect for next scheduled QC review. Continue line operation with enhanced visual inspection.",
+  Low:    "Log defect in the quality ledger. No line action required — mark for end-of-shift report."
+};
+
+const TASK_ALTERNATIVES = {
+  High:   "Re-assign to the next available qualified operator on the shift and update timeline by 30 mins.",
+  Medium: "Defer this task by one shift interval and add it to the next day's priority queue.",
+  Low:    "Add to the non-critical backlog. Complete when floor traffic allows without impacting KPIs."
+};
+
+// ── State ──────────────────────────────────────────────────────────────────
+let db = {};
+const decisions = {}; // tracks accept/reject by key
+
+document.addEventListener("DOMContentLoaded", () => {
+  if (!window.droneOpsDB) {
+    document.getElementById('app-container').innerHTML =
+      `<p style="color:var(--danger)">⚠ data.js not found or window.droneOpsDB not exported.</p>`;
+    return;
+  }
+  db = window.droneOpsDB;
+  renderOperations();
+});
+
+// ── Navigation ─────────────────────────────────────────────────────────────
+function navigate(view, el) {
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  el.classList.add('active');
+  ({ operations: renderOperations, supply: renderSupplyChain, supervisor: renderSupervisor })[view]();
+}
+
+// ── Helpers ────────────────────────────────────────────────────────────────
+function severityBadge(s) {
+  s = (s || '').toLowerCase();
+  const map = { high:'danger', critical:'danger', medium:'warning', warning:'warning', low:'success', excellent:'success', operational:'success', 'in stock':'success', pending:'accent' };
+  const cls = map[s] || 'muted';
+  return `<span class="badge badge-${cls}">${s.toUpperCase()}</span>`;
+}
+
+function confBar(conf, color='var(--accent)') {
+  const pct = conf > 1 ? conf : conf * 100;
+  const barColor = pct >= 90 ? 'var(--success)' : pct >= 75 ? 'var(--accent)' : 'var(--warning)';
+  return `
+    <div class="confidence-bar">
+      <div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${barColor}"></div></div>
+      <span style="font-size:12px;font-weight:600;color:${barColor}">${Math.round(pct)}%</span>
+    </div>`;
+}
+
+function decisionCtrl(key, altText) {
+  const d = decisions[key];
+  if (d === 'accept') return `<span class="badge badge-success">✓ Approved</span>`;
+  if (d === 'reject')  return `
+    <span class="badge badge-danger">✗ Rejected</span>
+    <div class="alt-suggestion" style="margin-top:10px">
+      <div class="alt-label">⚡ AI Alternative Suggestion</div>
+      <p>${altText}</p>
+    </div>`;
+  return `
+    <div class="decision-row">
+      <button class="btn btn-accept" onclick="decide('${key}', 'accept')">✓ Accept</button>
+      <button class="btn btn-reject" onclick="decide('${key}', 'reject')">✗ Reject</button>
+    </div>`;
+}
+
+window.decide = function(key, choice) {
+  decisions[key] = choice;
+  // re-render current view without full navigation
+  currentRender();
+};
+let currentRender = renderOperations;
+
+// ── SCREEN 1: Operations ────────────────────────────────────────────────────
+function renderOperations() {
+  currentRender = renderOperations;
+  document.getElementById('page-title').innerText = 'Operations Intelligence';
+
+  // KPIs derived from line_status
+  const opLines = db.line_status || [];
+  const avgEff = (opLines.reduce((s, l) => s + l.efficiency, 0) / opLines.length).toFixed(1);
+  const critCount = opLines.filter(l => l.status === 'Critical').length;
+  const warnCount = opLines.filter(l => l.status === 'Warning').length;
+  const okCount   = opLines.filter(l => l.status === 'Operational').length;
+
+  // Downtime tracker
+  const downtime = db.operations_downtime_tracker || [];
+
+  // Recommendations with AI decision control
+  const recs = db.operations_recommendations || [];
+  const recCards = recs.map((r, i) => {
+    const key = `ops-rec-${i}`;
+    const pBadge = r.priority === 'High' ? 'danger' : r.priority === 'Medium' ? 'warning' : 'muted';
+    return `
+      <div class="ai-rec-card ${decisions[key] === 'accept' ? 'accepted' : decisions[key] === 'reject' ? 'rejected' : ''}" id="${key}-card">
+        <div class="ai-rec-top">
+          <div>
+            <span class="badge badge-${pBadge}" style="margin-bottom:8px">${r.priority} Priority</span>
+            <div class="ai-rec-action">${r.action}</div>
+          </div>
+          ${confBar(r.confidence)}
+        </div>
+        <div class="ai-rec-impact"><strong>Projected Impact:</strong> ${r.impact}</div>
+        ${decisionCtrl(key, OPS_ALTERNATIVES[i % OPS_ALTERNATIVES.length])}
+      </div>`;
+  }).join('');
+
+  // Line status table
+  const lineRows = opLines.map(l => {
+    const clr = l.status === 'Operational' ? 'var(--success)' : l.status === 'Warning' ? 'var(--warning)' : 'var(--danger)';
+    return `<tr>
+      <td style="font-weight:500">${l.station}</td>
+      <td>${severityBadge(l.status)}</td>
+      <td>
+        <div class="progress-wrap" style="max-width:120px">
+          <div class="progress-fill" style="width:${l.efficiency}%;background:${clr}"></div>
+        </div>
+        <span style="font-size:12px;color:${clr}">${l.efficiency}%</span>
+      </td>
+      <td style="color:var(--text-muted);font-size:12px">${l.units}</td>
+    </tr>`;
+  }).join('');
+
+  // Downtime rows
+  const dtRows = downtime.map(d => `
+    <tr>
+      <td style="font-weight:500">${d.issue}</td>
+      <td style="color:var(--text-muted)">${d.location}</td>
+      <td style="color:var(--warning)">${d.est_time}</td>
+      <td>${confBar(d.confidence)}</td>
+    </tr>`).join('');
+
+  document.getElementById('app-container').innerHTML = `
+    <!-- KPI row -->
+    <div class="grid grid-3" style="margin-bottom:28px">
+      <div class="card kpi-card">
+        <div class="kpi-value">${avgEff}%</div>
+        <div class="kpi-label">Avg Line Efficiency</div>
+        <div class="kpi-trend" style="color:var(--success)">↑ Above Target</div>
+      </div>
+      <div class="card kpi-card">
+        <div class="kpi-value" style="color:var(--success)">${okCount}</div>
+        <div class="kpi-label">Lines Operational</div>
+        <div class="kpi-trend" style="color:var(--text-muted)">${warnCount} Warning · ${critCount} Critical</div>
+      </div>
+      <div class="card kpi-card">
+        <div class="kpi-value" style="color:var(--accent)">${recs.length}</div>
+        <div class="kpi-label">AI Recommendations Pending</div>
+        <div class="kpi-trend" style="color:var(--text-muted)">Review &amp; Decide Below</div>
+      </div>
+    </div>
+
+    <div class="grid grid-2">
+      <!-- AI Recommendations -->
+      <div class="card col-span-2">
+        <div class="card-header">
+          <div class="card-title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            AI Operations Recommendations — Human Review Required
+          </div>
+          <span class="badge badge-accent">${recs.length} Active</span>
+        </div>
+        <div class="scroll-y" style="max-height:460px">${recCards}</div>
+      </div>
+    </div>
+
+    <div class="grid grid-2" style="margin-top:28px">
+      <!-- Assembly Line Status -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Live Assembly Line Status</div>
+        </div>
+        <table class="data-table">
+          <thead><tr><th>Station</th><th>Status</th><th>Efficiency</th><th>Output</th></tr></thead>
+          <tbody>${lineRows}</tbody>
+        </table>
+      </div>
+
+      <!-- Downtime Tracker -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">⚠ Predicted Downtime Events</div>
+          <span class="badge badge-danger">${downtime.length} Risks</span>
+        </div>
+        <table class="data-table">
+          <thead><tr><th>Issue</th><th>Location</th><th>Est. Duration</th><th>AI Confidence</th></tr></thead>
+          <tbody>${dtRows}</tbody>
+        </table>
+      </div>
+    </div>
+  `;
+}
+
+// ── SCREEN 2: Supply Chain ──────────────────────────────────────────────────
+function renderSupplyChain() {
+  currentRender = renderSupplyChain;
+  document.getElementById('page-title').innerText = 'Supply Chain Console';
+
+  const vendors = db.supply_chain_vendors || [];
+  const inventory = db.supply_chain_inventory || [];
+  const critInv = inventory.filter(i => i.status === 'Critical').length;
+
+  // Vendor recommendation cards
+  const riskVendors = vendors.filter(v => v.status === 'Critical' || v.status === 'Warning');
+  const vendorRecs = riskVendors.map((v, i) => {
+    const key = `sc-vendor-${i}`;
+    const best = vendors.find(b => b.status === 'Excellent' && b.name !== v.name);
+    const altVendor = best ? best.name : 'Precision Devices';
+    return `
+      <div class="ai-rec-card ${decisions[key] === 'accept' ? 'accepted' : decisions[key] === 'reject' ? 'rejected' : ''}">
+        <div class="ai-rec-top">
+          <div>
+            <span class="badge badge-${v.status === 'Critical' ? 'danger' : 'warning'}" style="margin-bottom:8px">${v.status} Vendor Risk</span>
+            <div class="ai-rec-action">Switch procurement from <strong style="color:var(--danger)">${v.name}</strong> to <strong style="color:var(--success)">${altVendor}</strong> for next cycle</div>
+          </div>
+          ${confBar(v.reliability)}
+        </div>
+        <div class="ai-rec-impact">
+          <strong>Current Metrics:</strong> Reliability ${v.reliability}% · Defect Rate ${v.defect_rate}% · Lead Time ${v.lead_time}
+        </div>
+        ${decisionCtrl(key, SUPPLY_ALTERNATIVES_VENDOR[i % SUPPLY_ALTERNATIVES_VENDOR.length])}
+      </div>`;
+  }).join('');
+
+  // Inventory recs for critical stock
+  const critItems = inventory.filter(i => i.status === 'Critical' || i.status === 'Warning');
+  const invRecs = critItems.map((item, i) => {
+    const key = `sc-inv-${i}`;
+    return `
+      <div class="ai-rec-card ${decisions[key] === 'accept' ? 'accepted' : decisions[key] === 'reject' ? 'rejected' : ''}">
+        <div class="ai-rec-top">
+          <div>
+            <span class="badge badge-${item.status === 'Critical' ? 'danger' : 'warning'}" style="margin-bottom:8px">${item.status} Stock Level</span>
+            <div class="ai-rec-action">Raise emergency PO for <strong style="color:var(--warning)">${item.component}</strong> — ${item.days_in_stock} days remaining</div>
+          </div>
+          ${confBar(95 - item.days_in_stock)}
+        </div>
+        <div class="ai-rec-impact"><strong>AI Recommendation:</strong> Initiate procurement now to prevent production stoppage within ${item.days_in_stock} days.</div>
+        ${decisionCtrl(key, SUPPLY_ALTERNATIVES_INVENTORY[i % SUPPLY_ALTERNATIVES_INVENTORY.length])}
+      </div>`;
+  }).join('');
+
+  // Full vendor table
+  const vendorRows = vendors.map(v => {
+    const rBar = `<div class="progress-wrap" style="max-width:80px"><div class="progress-fill" style="width:${v.reliability}%;background:${v.reliability>=90?'var(--success)':v.reliability>=80?'var(--accent)':'var(--warning)'}"></div></div>`;
+    return `<tr>
+      <td style="font-weight:500">${v.name}</td>
+      <td>${rBar} <span style="font-size:12px;color:var(--text-muted)">${v.reliability}%</span></td>
+      <td>${v.defect_rate}%</td>
+      <td style="color:var(--text-muted)">${v.lead_time}</td>
+      <td>${severityBadge(v.status)}</td>
+    </tr>`;
+  }).join('');
+
+  // Inventory table
+  const invRows = inventory.map(i => {
+    const fill = Math.min((i.days_in_stock / 90) * 100, 100);
+    const clr  = i.status === 'Critical' ? 'var(--danger)' : i.status === 'Warning' ? 'var(--warning)' : 'var(--success)';
+    return `<tr>
+      <td style="font-weight:500">${i.component}</td>
+      <td>${i.days_in_stock} days</td>
+      <td>${severityBadge(i.status)}</td>
+      <td>
+        <div class="progress-wrap" style="max-width:100px">
+          <div class="progress-fill" style="width:${fill}%;background:${clr}"></div>
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('app-container').innerHTML = `
+    <!-- KPI -->
+    <div class="grid grid-3" style="margin-bottom:28px">
+      <div class="card kpi-card">
+        <div class="kpi-value" style="color:var(--danger)">${critInv}</div>
+        <div class="kpi-label">Critical Stock Items</div>
+        <div class="kpi-trend" style="color:var(--warning)">Immediate Action Required</div>
+      </div>
+      <div class="card kpi-card">
+        <div class="kpi-value" style="color:var(--danger)">${riskVendors.length}</div>
+        <div class="kpi-label">At-Risk Vendors</div>
+        <div class="kpi-trend" style="color:var(--text-muted)">Review Scorecard Below</div>
+      </div>
+      <div class="card kpi-card">
+        <div class="kpi-value" style="color:var(--accent)">${vendors.filter(v=>v.status==='Excellent').length}</div>
+        <div class="kpi-label">Preferred Vendors Available</div>
+        <div class="kpi-trend" style="color:var(--success)">Ready to Accept Orders</div>
+      </div>
+    </div>
+
+    <div class="grid grid-2">
+      <!-- Vendor AI Recs -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">🔄 Vendor Switching Recommendations</div>
+          <span class="badge badge-danger">${riskVendors.length} Alerts</span>
+        </div>
+        ${vendorRecs || '<p style="color:var(--text-muted)">All vendors are performing normally.</p>'}
+      </div>
+
+      <!-- Inventory AI Recs -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">📦 Inventory PO Recommendations</div>
+          <span class="badge badge-warning">${critItems.length} Items</span>
+        </div>
+        ${invRecs || '<p style="color:var(--text-muted)">All stock levels are healthy.</p>'}
+      </div>
+    </div>
+
+    <div class="grid grid-2" style="margin-top:28px">
+      <!-- Vendor table -->
+      <div class="card">
+        <div class="card-header"><div class="card-title">Full Vendor Scorecard</div></div>
+        <div class="scroll-y">
+          <table class="data-table">
+            <thead><tr><th>Vendor</th><th>Reliability</th><th>Defect Rate</th><th>Lead Time</th><th>Status</th></tr></thead>
+            <tbody>${vendorRows}</tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Inventory table -->
+      <div class="card">
+        <div class="card-header"><div class="card-title">Component Inventory Forecast</div></div>
+        <div class="scroll-y">
+          <table class="data-table">
+            <thead><tr><th>Component</th><th>Stock</th><th>Health</th><th>Level</th></tr></thead>
+            <tbody>${invRows}</tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// ── SCREEN 3: Line Supervisor ───────────────────────────────────────────────
+function renderSupervisor() {
+  currentRender = renderSupervisor;
+  document.getElementById('page-title').innerText = 'Line Supervisor App';
+
+  const alerts  = db.mobile_home_alerts || [];
+  const tasks   = db.mobile_tasks || [];
+  const defects = db.mobile_defects || [];
+
+  const stripClass = t => ({ Critical:'crit', Warning:'warn', Update:'info', Efficiency:'good' })[t] || 'info';
+  const stripIcon  = t => ({ Critical:'🚨', Warning:'⚠️', Update:'🔔', Efficiency:'📈' })[t] || '💡';
+
+  // Alert strips with decision controls
+  const alertsHTML = alerts.map((a, i) => {
+    const key = `sv-alert-${i}`;
+    const alt = ALERT_ALTERNATIVES[a.type] || ALERT_ALTERNATIVES['Update'];
+    return `
+      <div class="alert-strip ${stripClass(a.type)}">
+        <div class="alert-strip-icon">${stripIcon(a.type)}</div>
+        <div class="alert-strip-content">
+          <div class="alert-strip-title">${a.message}</div>
+          <div class="alert-strip-sub">${a.details}</div>
+          ${a.type === 'Critical' || a.type === 'Warning' ? `
+            <div class="alert-controls">
+              ${decisions[key] === 'accept' ? `<span class="badge badge-success">✓ Action Approved</span>` :
+                decisions[key] === 'reject'  ? `<span class="badge badge-danger">✗ Rejected</span><div class="alt-suggestion" style="margin-top:8px"><div class="alt-label">⚡ Alternative</div><p>${alt}</p></div>` : `
+                <button class="btn btn-accept" onclick="decide('${key}','accept')">✓ Approve Action</button>
+                <button class="btn btn-reject" onclick="decide('${key}','reject')">✗ Reject &amp; Suggest Alt</button>`}
+            </div>` : ''}
+        </div>
+        <div class="alert-strip-time">${a.timestamp}</div>
+      </div>`;
+  }).join('');
+
+  // Defect rows with AI decision
+  const defectRows = defects.map((d, i) => {
+    const key = `sv-defect-${i}`;
+    const alt = DEFECT_ALTERNATIVES[d.severity] || DEFECT_ALTERNATIVES['Medium'];
+    const ctrl = decisions[key] === 'accept' ? `<span class="badge badge-success">✓ Rework Authorised</span>` :
+                 decisions[key] === 'reject'  ? `<span class="badge badge-danger">✗ Escalation Rejected</span>` :
+                 `<button class="btn btn-accept" style="font-size:11px;padding:5px 10px" onclick="decide('${key}','accept')">Approve Rework</button>
+                  <button class="btn btn-reject"  style="font-size:11px;padding:5px 10px" onclick="decide('${key}','reject')">Reject</button>`;
+    const altRow = decisions[key] === 'reject' ? `
+      <tr><td colspan="6"><div class="alt-suggestion"><div class="alt-label">⚡ Alternative</div><p>${alt}</p></div></td></tr>` : '';
+    return `<tr>
+      <td style="font-weight:500">${d.type}</td>
+      <td>${severityBadge(d.severity)}</td>
+      <td>${d.batch}</td>
+      <td>${d.station}</td>
+      <td style="color:var(--text-muted)">${d.timestamp}</td>
+      <td><div style="display:flex;gap:6px;flex-wrap:wrap">${ctrl}</div></td>
+    </tr>${altRow}`;
+  }).join('');
+
+  // Task rows with AI decision
+  const taskRows = tasks.map((t, i) => {
+    const key = `sv-task-${i}`;
+    const alt = TASK_ALTERNATIVES[t.priority] || TASK_ALTERNATIVES['Medium'];
+    const ctrl = decisions[key] === 'accept' ? `<span class="badge badge-success">✓ Confirmed</span>` :
+                 decisions[key] === 'reject'  ? `<span class="badge badge-danger">✗ Reassigned</span>` :
+                 `<button class="btn btn-accept" style="font-size:11px;padding:5px 10px" onclick="decide('${key}','accept')">Confirm</button>
+                  <button class="btn btn-reject"  style="font-size:11px;padding:5px 10px" onclick="decide('${key}','reject')">Reassign</button>`;
+    const altRow = decisions[key] === 'reject' ? `
+      <tr><td colspan="6"><div class="alt-suggestion"><div class="alt-label">⚡ Reassignment Suggestion</div><p>${alt}</p></div></td></tr>` : '';
+    return `<tr>
+      <td>${severityBadge(t.priority)}</td>
+      <td style="font-weight:500;color:var(--text-main)">${t.title}</td>
+      <td style="color:var(--text-muted)">${t.assignee}</td>
+      <td style="color:var(--text-muted)">${t.station}</td>
+      <td style="color:var(--accent)">${t.duration}</td>
+      <td><div style="display:flex;gap:6px;flex-wrap:wrap">${ctrl}</div></td>
+    </tr>${altRow}`;
+  }).join('');
+
+  document.getElementById('app-container').innerHTML = `
+    <!-- KPI strip -->
+    <div class="grid grid-3" style="margin-bottom:28px">
+      <div class="card kpi-card">
+        <div class="kpi-value" style="color:var(--danger)">${alerts.filter(a=>a.type==='Critical').length}</div>
+        <div class="kpi-label">Critical Alerts</div><div class="kpi-trend" style="color:var(--warning)">Needs Decision</div>
+      </div>
+      <div class="card kpi-card">
+        <div class="kpi-value" style="color:var(--accent)">${tasks.length}</div>
+        <div class="kpi-label">Active Tasks</div><div class="kpi-trend" style="color:var(--text-muted)">This Shift</div>
+      </div>
+      <div class="card kpi-card">
+        <div class="kpi-value" style="color:var(--warning)">${defects.filter(d=>d.severity==='High').length}</div>
+        <div class="kpi-label">High-Severity Defects</div><div class="kpi-trend" style="color:var(--text-muted)">Logged Today</div>
+      </div>
+    </div>
+
+    <!-- Alerts with AI decisions -->
+    <div class="card" style="margin-bottom:28px">
+      <div class="card-header">
+        <div class="card-title">🚨 Live Line Alerts — AI Action Pending</div>
+        <span class="badge badge-danger">${alerts.filter(a=>a.type==='Critical').length} Critical</span>
+      </div>
+      <div class="scroll-y">${alertsHTML}</div>
+    </div>
+
+    <!-- Tasks + Defects -->
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">📋 Shift Task Queue</div>
+          <span class="badge badge-accent">${tasks.length} Tasks</span>
+        </div>
+        <div class="scroll-y">
+          <table class="data-table">
+            <thead><tr><th>Priority</th><th>Task</th><th>Assignee</th><th>Station</th><th>Duration</th><th>Decision</th></tr></thead>
+            <tbody>${taskRows}</tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">🔬 Defect Log — QC Review</div>
+          <span class="badge badge-warning">${defects.length} Logged</span>
+        </div>
+        <div class="scroll-y">
+          <table class="data-table">
+            <thead><tr><th>Defect</th><th>Severity</th><th>Batch</th><th>Station</th><th>Time</th><th>Decision</th></tr></thead>
+            <tbody>${defectRows}</tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  `;
+}
+</script>
+</body>
+</html>
