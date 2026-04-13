@@ -162,59 +162,33 @@ DroneOps AI uses a **Cross-Persona Multi-Agent Orchestration** framework:
 
 ---
 
-## 8. User Interfaces
+## 8. User Interfaces (8 Agentic Screens)
 
-### 8.1 Line Supervisor Mobile App (5 screens)
+The dashboard is structured around 8 distinct views that surface actionable AI intelligence across different organizational roles.
 
-**Home Screen**
-- Live alert feed: Machine overheating, worker reallocation, line efficiency status
-- Quick Actions: Request Worker | Log Defect | Request Maintenance | Approve Overtime
-- Bottom navigation: Home | Tasks | Defects | Chat | Settings
+### 8.1 Operations Manager (3 screens)
+- **Ops Manager Dashboard:** Plant 1 (Bengaluru) summary featuring Production Lines status, Bottleneck Heatmap, AI Downtime Predictor, and critical KPI snapshots (OEE, Throughput, Yield Rate).
+- **Downtime Alert Detail:** Deep dive into specific predicted events (e.g., Soldering Machine SM-04). Features component-level sensor readings (temperature, vibration, runtime), AI-recommended maintenance options with cost/downtime simulation, and schedule impact.
+- **QC Vision Inspection:** Integrates the Computer Vision Quality Agent. Shows live feed PCB inspection metrics, latest board defect details (e.g., Cold Solder Joint), line-speed telemetry, and 7-day defect trends.
 
-**Task Screen (Shift Planner)**
-- Drag-to-reassign task list with AI suggestions
-- Tasks prioritized: Quality Check → Inventory Count → Machine Calibration → Training
-- Priority badges: High / Medium / Low
+### 8.2 Line Supervisor Mobile (2 screens)
+- **AI Chat Assistant (OperatioAI):** A conversational interface where the Line Supervisor receives predictive alerts (e.g., Worker Fatigue) and executes Quick Actions (Reassign Worker, Log Defect, Request Maintenance).
+- **Shift Planner:** AI-optimized team scheduling. Displays operator status, current assigned stations, fatigue warnings, and AI-suggested rotational shifts.
 
-**Defects Screen**
-- Camera capture for instant AI analysis
-- Recent defects list with severity (e.g., Cold Solder Joint — HIGH)
-- Batch and timestamp tagging
+### 8.3 Supply Chain (2 screens)
+- **Vendor & Inventory Console:** Active monitoring of supplier health (Reliability, Defect Rate, Lead Days), real-time inventory levels, Vendor Risk Agent recommendations, and a Cost Simulator to compare alternative sourcing options.
+- **Procurement Confirmation:** Review screen for AI-generated Purchase Orders. Features AI confidence score, cost impact, and a 1-click toggle to push the action directly through MS Dynamics 365 ERP.
 
-**Settings Screen**
-- Notifications: Enabled/Disabled
-- Auto-refresh Dashboard: 60s interval
-- Language selection
+### 8.4 Analytics (1 screen)
+- **Team & Roles:** Provides a live geographical snapshot of Plant Personnel, displaying active shifts, location, and online status.
 
-### 8.2 Supply Chain Console (3 screens)
+---
 
-**Overview Screen**
-- Vendor Performance Scorecards (6 vendors with reliability %, defect rate, lead time)
-- Inventory Status (Microcontrollers, Sensors, Other Components, Battery Cells)
-- AI Risk Alerts panel with Dismiss / Apply Recommendation actions
-- Cost Simulator: Run AI Cost Analysis by component type and quantity
-
-**Vendors Screen**
-- Full vendor list with reliability, defect rate, lead time, status badge
-
-**Inventory Screen**
-- Inventory Overview with days-in-stock progress bars
-- Critical shortage alerts (e.g., "Other Components — Critical: near stock depleted")
-
-### 8.3 Operations Manager Dashboard (2 screens)
-
-**Overview Screen**
-- Production Line Status: PCB Assembly (Operational 94%), Soldering (Warning 72%), Testing (Operational 90%), Repackaging (Critical 63%)
-- AI Downtime Tracker: Machine Calibration, Component Shortage, Quality Control Hold, Scheduled Maintenance — all with confidence scores and time estimates
-- AI Recommendations panel with Implement buttons and confidence scores
-- Assembly Line Bottleneck Heatmap (Low / Medium / High priority by station)
-- KPI Snapshot: OEE 82.4%, Throughput 94.7%, Yield Rate 90.8%
-
-**Live Assembly Line Screen**
-- Live CCTV feed of Production Floor A with AI overlay
-- Live Status: 60% uptime | Avg Efficiency 89% | AI Alerts: 5 Active | Total Workers: 20
-- Conveyor flow map: Component Prep → PCB Assembly → Soldering → Heat Treatment → Testing → Quality Check → Packaging → Final Inspection
-- AI Intelligence Center: Active Impact Alerts with severity and station analysis
+## 8.5 Agent Integration Protocol
+To ensure the multi-agent system (Sentinel-X) works seamlessly with the UI, the state must be maintained in the central data structure (`data.js` and `droneops_ai_database.json`):
+1. **Agent Overrides:** When an agent updates a prediction, it must write directly to the corresponding array (e.g., `operations_recommendations` or `supply_chain_vendors`).
+2. **Confidence Thresholds:** Agents must append a `confidence` or `confidence_pct` value to every recommended action. If confidence is ≥90%, the action is highlighted as safe to auto-run.
+3. **Alternative Logic:** If a user rejects a recommendation in the UI, the Agent must capture the rejection event and query the `[Entity]_ALTERNATIVES` list to simulate a fallback strategy.
 
 ---
 

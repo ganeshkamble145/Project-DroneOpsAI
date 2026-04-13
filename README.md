@@ -99,18 +99,28 @@ open index.html
 
 ## Using the Dashboard
 
-The sidebar contains three navigable views:
+The application dashboard contains 8 comprehensive Agentic AI views:
 
-| View | Description |
-|------|-------------|
-| **Operations** | Line efficiency KPIs, AI recommendations, downtime tracker |
-| **Supply Chain** | Vendor scorecards, inventory forecast, PO recommendations |
-| **Line Supervisor** | Live alerts, shift tasks, defect log |
+### Operations Manager
+1. **Ops Manager Dashboard:** Plant 1 status, Bottleneck Heatmap, AI Predictor, KPI summary
+2. **Downtime Alert Detail:** Sensor telemetry, maintenance AI options & impact
+3. **QC Vision Inspection:** Live feed simulation, defect report, confidence scores, defect trend
+
+### Line Supervisor Mobile
+4. **AI Chat Assistant:** Conversational AI alerts, worker fatigue, quick actions
+5. **Shift Planner:** Shift roster, AI rotation suggestions, fatigue flags
+
+### Supply Chain
+6. **Vendor & Inventory Console:** Supplier KPI, inventory forecast, cost simulation, AI vendor recommendations
+7. **Procurement Confirmation:** Generated PO approval and ERP integration toggle
+
+### Analytics
+8. **Team & Roles:** Live personnel roster
 
 ### Human-in-the-Loop Controls
-Every AI recommendation includes:
-- ✅ **Accept** — Approves the AI action; system logs the decision
-- ❌ **Reject** — Dismisses the recommendation and surfaces a context-aware **alternative suggestion**
+Every AI recommendation in the dashboard includes an enforced review checkpoint:
+- ✅ **Approve / Accept** — Approves the AI action; Agent receives execution clearance to push via integrating loops (e.g. ERP).
+- ❌ **Reject / Override** — Dismisses the recommendation and forces the Agent to surface a context-aware **Alternative Strategy**.
 
 ---
 
