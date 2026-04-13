@@ -1,692 +1,449 @@
 {
+  "plant_info": {
+    "plant_id": "PLT001",
+    "name": "Plant 1",
+    "location": "Bengaluru, KA",
+    "active_user": {
+      "name": "Arjun Mehta",
+      "role": "Ops Manager",
+      "initials": "AM"
+    },
+    "notifications_count": 3,
+    "current_shift": "Shift 2",
+    "shift_time": "14:00–22:00",
+    "ai_model": "SENTINEL-X"
+  },
+
   "users": [
-    {
-      "user_id": "U001",
-      "name": "Sarah Chen",
-      "role": "Operations Manager",
-      "location": "Austin Plant",
-      "status": "Online"
-    },
-    {
-      "user_id": "U002",
-      "name": "John Chen",
-      "role": "Line Supervisor",
-      "location": "Production Line B",
-      "status": "Online"
-    },
-    {
-      "user_id": "U003",
-      "name": "Elena Rodriguez",
-      "role": "Supply Chain Manager",
-      "location": "Corporate HQ",
-      "status": "Away"
-    },
-    {
-      "user_id": "U004",
-      "name": "Marcus Thorne",
-      "role": "Quality Control Lead",
-      "location": "Testing Bay 3",
-      "status": "Online"
-    },
-    {
-      "user_id": "U005",
-      "name": "Aisha Khan",
-      "role": "Maintenance Engineer",
-      "location": "Maintenance Depot",
-      "status": "On-Call"
-    },
-    {
-      "user_id": "U006",
-      "name": "David Park",
-      "role": "Line Supervisor",
-      "location": "Production Line A",
-      "status": "Online"
-    },
-    {
-      "user_id": "U007",
-      "name": "Linda Wu",
-      "role": "Inventory Specialist",
-      "location": "Warehouse Section 4",
-      "status": "Online"
-    },
-    {
-      "user_id": "U008",
-      "name": "Robert Miller",
-      "role": "Plant Head",
-      "location": "Austin Plant",
-      "status": "Online"
-    },
-    {
-      "user_id": "U009",
-      "name": "Samira Jafari",
-      "role": "Data Analyst",
-      "location": "Remote",
-      "status": "Online"
-    },
-    {
-      "user_id": "U010",
-      "name": "Kevin Lee",
-      "role": "Technician",
-      "location": "Soldering Station 2",
-      "status": "Online"
-    }
+    { "user_id": "U001", "name": "Arjun Mehta",   "role": "Ops Manager",            "location": "Plant 1 – Bengaluru", "status": "Online" },
+    { "user_id": "U002", "name": "Priya Das",      "role": "Line Supervisor",         "location": "Final Assembly",      "status": "Online" },
+    { "user_id": "U003", "name": "Ravi Kumar",     "role": "Technician",              "location": "Assembly Station 5",  "status": "Online" },
+    { "user_id": "U004", "name": "Deepa M.",       "role": "QC Lead",                 "location": "PCB Inspection Line", "status": "Online" },
+    { "user_id": "U005", "name": "Ankit Sharma",   "role": "Assembly Technician",     "location": "PCB Loading",         "status": "Active" },
+    { "user_id": "U006", "name": "Rahul Mehta",    "role": "Motor Mounting Tech",     "location": "Motor Mounting",      "status": "Break" },
+    { "user_id": "U007", "name": "Vikram Singh",   "role": "Firmware Engineer",       "location": "Firmware Flash",      "status": "Active" },
+    { "user_id": "U008", "name": "Sanya Malhotra", "role": "Payload Engineer",        "location": "Payload Calibration", "status": "Active" },
+    { "user_id": "U009", "name": "Priya Singh",    "role": "Assembly Technician",     "location": "Testing Bench",       "status": "Online" },
+    { "user_id": "U010", "name": "Neha Joshi",     "role": "Supply Chain Executive",  "location": "Procurement Desk",   "status": "Online" }
   ],
-  "mobile_home_alerts": [
-    {
-      "id": "AL01",
-      "type": "Critical",
-      "message": "Machine 4 overheating risk detected",
-      "timestamp": "5m ago",
-      "details": "Current temperature: 85°C. Suggest shift cooling system."
-    },
-    {
-      "id": "AL02",
-      "type": "Update",
-      "message": "Afternoon Shift Worker reallotted to Machine 4",
-      "timestamp": "15m ago",
-      "details": "43% -> 12% reallotted to Machine"
-    },
-    {
-      "id": "AL03",
-      "type": "Efficiency",
-      "message": "Line efficiency is at 94% today",
-      "timestamp": "1h ago",
-      "details": "2% above target. Great work boosting the floor!"
-    },
-    {
-      "id": "AL04",
-      "type": "Warning",
-      "message": "Solder paste depletion on Line 2",
-      "timestamp": "10m ago",
-      "details": "Estimated 20 minutes remaining at current throughput."
-    },
-    {
-      "id": "AL05",
-      "type": "Critical",
-      "message": "Conveyor jam detected - Packaging Line 1",
-      "timestamp": "2m ago",
-      "details": "AI sensing motor resistance. Stop protocol recommended."
-    },
-    {
-      "id": "AL06",
-      "type": "Update",
-      "message": "Training Session - New Protocol",
-      "timestamp": "45m ago",
-      "details": "Session moved to 3:00 PM in Breakroom B."
-    },
-    {
-      "id": "AL07",
-      "type": "Warning",
-      "message": "Humidity threshold exceeded in Clean Room",
-      "timestamp": "12m ago",
-      "details": "Currently 62%. Sensor suggests HVAC recalibration."
-    },
-    {
-      "id": "AL08",
-      "type": "Efficiency",
-      "message": "Energy optimization active",
-      "timestamp": "30m ago",
-      "details": "Switched to solar grid. Expected saving: ₹2,400/hr."
-    },
-    {
-      "id": "AL09",
-      "type": "Update",
-      "message": "Batch #4 L247 completed",
-      "timestamp": "8m ago",
-      "details": "98% yield rate recorded for multi-rotor assembly."
-    },
-    {
-      "id": "AL10",
-      "type": "Critical",
-      "message": "Emergency Stop - Soldering Station 3",
-      "timestamp": "1m ago",
-      "details": "Manual override triggered by Operator Kevin Lee."
-    }
+
+  "global_ai_alert": {
+    "id": "GA01",
+    "line": "PCB Assembly Line 2",
+    "message": "AI Alert: PCB Assembly Line 2 – Predicted slowdown in 2h. Confidence: 80%. Recommended: Schedule calibration during low-load window.",
+    "confidence": 80,
+    "action": "Take Action"
+  },
+
+  "line_status": [
+    { "station": "PCB Assembly",      "status": "Optimal",    "efficiency": 94, "throughput": 142, "unit": "units/hr", "sparkline": [60,75,70,85,94] },
+    { "station": "Soldering Station", "status": "Warning",    "efficiency": 72, "throughput": 98,  "unit": "units/hr", "sparkline": [90,85,60,50,45] },
+    { "station": "Component Testing", "status": "Optimal",    "efficiency": 88, "throughput": 110, "unit": "units/hr", "sparkline": [80,85,82,88,88] },
+    { "station": "Final Packaging",   "status": "Optimal",    "efficiency": 96, "throughput": 204, "unit": "units/hr", "sparkline": [90,92,95,96,96] }
   ],
-  "mobile_tasks": [
-    {
-      "id": "T01",
-      "title": "Quality Check - Batch #1247",
-      "assignee": "John Chen",
-      "station": "Line 4",
-      "priority": "High",
-      "duration": "45 min"
-    },
-    {
-      "id": "T02",
-      "title": "Inventory Count - Raw Materials",
-      "assignee": "Raw materials group",
-      "station": "Storage A",
-      "priority": "Medium",
-      "duration": "10 min"
-    },
-    {
-      "id": "T03",
-      "title": "Machine Calibration - Line 7",
-      "assignee": "Jane Smith",
-      "station": "Line 7",
-      "priority": "High",
-      "duration": "60 min"
-    },
-    {
-      "id": "T04",
-      "title": "Training Session - New Protocol",
-      "assignee": "Shift B Team",
-      "station": "Training Hall",
-      "priority": "Low",
-      "duration": "30 min"
-    },
-    {
-      "id": "T05",
-      "title": "Safety Inspection - SMT Line",
-      "assignee": "Aisha Khan",
-      "station": "SMT 1",
-      "priority": "High",
-      "duration": "20 min"
-    },
-    {
-      "id": "T06",
-      "title": "Component Retrieval - MCUs",
-      "assignee": "Linda Wu",
-      "station": "Loading Dock",
-      "priority": "Medium",
-      "duration": "15 min"
-    },
-    {
-      "id": "T07",
-      "title": "Tooling Reset - CNC Mill 2",
-      "assignee": "Technician Team",
-      "station": "CNC Area",
-      "priority": "High",
-      "duration": "40 min"
-    },
-    {
-      "id": "T08",
-      "title": "Waste Disposal - Chemical",
-      "assignee": "Maintenance",
-      "station": "Outside",
-      "priority": "Low",
-      "duration": "25 min"
-    },
-    {
-      "id": "T09",
-      "title": "Firmware Upload - Batch #1248",
-      "assignee": "Marcus Thorne",
-      "station": "Testing Bay",
-      "priority": "Medium",
-      "duration": "50 min"
-    },
-    {
-      "id": "T10",
-      "title": "End of Shift Handover",
-      "assignee": "All Supervisors",
-      "station": "Main Office",
-      "priority": "High",
-      "duration": "15 min"
-    }
+
+  "bottleneck_heatmap": [
+    { "stage": "STG 1", "label": "Component Prep",  "wait_min": 0.8,  "status": "low",    "priority": "Low" },
+    { "stage": "STG 2", "label": "PCB Mounting",    "wait_min": 1.2,  "status": "low",    "priority": "Low" },
+    { "stage": "STG 3", "label": "Reflow Oven",     "wait_min": 2.8,  "status": "medium", "priority": "Medium" },
+    { "stage": "STG 4", "label": "PCB Inspection",  "wait_min": 4.2,  "status": "high",   "priority": "High" },
+    { "stage": "STG 5", "label": "Soldering",       "wait_min": 2.4,  "status": "medium", "priority": "Medium" },
+    { "stage": "STG 6", "label": "Final Pack",      "wait_min": 0.5,  "status": "low",    "priority": "Low" }
   ],
-  "mobile_defects": [
-    {
-      "id": "D01",
-      "type": "Cold Solder Joint",
-      "batch": "#4 L247",
-      "severity": "High",
-      "timestamp": "20:08",
-      "station": "Soldering"
-    },
-    {
-      "id": "D02",
-      "type": "Misaligned Component",
-      "batch": "#4 L247",
-      "severity": "Medium",
-      "timestamp": "19:45",
-      "station": "SMT"
-    },
-    {
-      "id": "D03",
-      "type": "Missing Screw",
-      "batch": "#3 L240",
-      "severity": "Low",
-      "timestamp": "18:30",
-      "station": "Final Assembly"
-    },
-    {
-      "id": "D04",
-      "type": "Surface Scratch",
-      "batch": "#4 L247",
-      "severity": "Low",
-      "timestamp": "17:15",
-      "station": "Packaging"
-    },
-    {
-      "id": "D05",
-      "type": "Cracked Frame",
-      "batch": "#1 L210",
-      "severity": "High",
-      "timestamp": "16:02",
-      "station": "Injection Moulding"
-    },
-    {
-      "id": "D06",
-      "type": "Defective ESC",
-      "batch": "#4 L247",
-      "severity": "High",
-      "timestamp": "15:45",
-      "station": "Testing"
-    },
-    {
-      "id": "D07",
-      "type": "Loose Connection",
-      "batch": "#4 L247",
-      "severity": "Medium",
-      "timestamp": "14:20",
-      "station": "Interconnects"
-    },
-    {
-      "id": "D08",
-      "type": "Wrong Firmware Version",
-      "batch": "#2 L225",
-      "severity": "High",
-      "timestamp": "13:10",
-      "station": "Testing"
-    },
-    {
-      "id": "D09",
-      "type": "Glue Overflow",
-      "batch": "#4 L247",
-      "severity": "Low",
-      "timestamp": "12:50",
-      "station": "Assembly"
-    },
-    {
-      "id": "D10",
-      "type": "Improper Labeling",
-      "batch": "#3 L240",
-      "severity": "Low",
-      "timestamp": "11:05",
-      "station": "Packaging"
-    }
+
+  "bottleneck_critical": {
+    "stage": "PCB Inspection",
+    "wait_min": 4.2,
+    "units_in_queue": 18,
+    "action": "Recommend visual inspection bypass for low-complexity batches."
+  },
+
+  "downtime_predictor": [
+    { "id": "DT01", "issue": "Soldering Machine Calibration",  "location": "Soldering Station 2 (SM-04)", "risk_pct": 78, "est_time": "2.4 hrs",  "confidence": 92 },
+    { "id": "DT02", "issue": "Pick-and-Place Sensor Drift",    "location": "PCB Assembly Line 2",         "risk_pct": 61, "est_time": "3.5 hrs",  "confidence": 79 },
+    { "id": "DT03", "issue": "Reflow Oven Temp Variance",      "location": "Soldering Station 1",         "risk_pct": 44, "est_time": "5.0 hrs",  "confidence": 71 }
   ],
-  "supply_chain_vendors": [
-    {
-      "name": "TechCorp Industries",
-      "reliability": 87,
-      "defect_rate": 1.2,
-      "lead_time": "14 days",
-      "status": "Critical"
-    },
-    {
-      "name": "AlphaTech Solutions",
-      "reliability": 98,
-      "defect_rate": 0.3,
-      "lead_time": "10 days",
-      "status": "Excellent"
-    },
-    {
-      "name": "Global Components",
-      "reliability": 76,
-      "defect_rate": 2.8,
-      "lead_time": "21 days",
-      "status": "Critical"
-    },
-    {
-      "name": "Precision Devices",
-      "reliability": 95,
-      "defect_rate": 0.8,
-      "lead_time": "8 days",
-      "status": "Excellent"
-    },
-    {
-      "name": "Micro Systems",
-      "reliability": 82,
-      "defect_rate": 2.1,
-      "lead_time": "16 days",
-      "status": "Warning"
-    },
-    {
-      "name": "PowerCell Dynamics",
-      "reliability": 91,
-      "defect_rate": 1.5,
-      "lead_time": "12 days",
-      "status": "Excellent"
-    },
-    {
-      "name": "AeroParts Pro",
-      "reliability": 89,
-      "defect_rate": 1.1,
-      "lead_time": "15 days",
-      "status": "Warning"
-    },
-    {
-      "name": "Titan Composites",
-      "reliability": 94,
-      "defect_rate": 0.6,
-      "lead_time": "18 days",
-      "status": "Excellent"
-    },
-    {
-      "name": "NanoLogic",
-      "reliability": 97,
-      "defect_rate": 0.4,
-      "lead_time": "9 days",
-      "status": "Excellent"
-    },
-    {
-      "name": "Delta Circuits",
-      "reliability": 78,
-      "defect_rate": 2.5,
-      "lead_time": "25 days",
-      "status": "Critical"
-    }
-  ],
-  "supply_chain_inventory": [
-    {
-      "component": "Microcontrollers",
-      "days_in_stock": 45,
-      "status": "In Stock",
-      "capacity": 97
-    },
-    {
-      "component": "Sensors",
-      "days_in_stock": 12,
-      "status": "Critical",
-      "capacity": 97
-    },
-    {
-      "component": "Battery Cells",
-      "days_in_stock": 67,
-      "status": "In Stock",
-      "capacity": 97
-    },
-    {
-      "component": "Carbon Fiber Sheets",
-      "days_in_stock": 5,
-      "status": "Critical",
-      "capacity": 97
-    },
-    {
-      "component": "BLDC Motors",
-      "days_in_stock": 30,
-      "status": "In Stock",
-      "capacity": 97
-    },
-    {
-      "component": "Propellers",
-      "days_in_stock": 82,
-      "status": "In Stock",
-      "capacity": 97
-    },
-    {
-      "component": "Electronic Speed Controllers (ESC)",
-      "days_in_stock": 15,
-      "status": "Warning",
-      "capacity": 97
-    },
-    {
-      "component": "GPS Modules",
-      "days_in_stock": 40,
-      "status": "In Stock",
-      "capacity": 97
-    },
-    {
-      "component": "Wiring Harnesses",
-      "days_in_stock": 90,
-      "status": "In Stock",
-      "capacity": 97
-    },
-    {
-      "component": "Camera Gimbals",
-      "days_in_stock": 8,
-      "status": "Critical",
-      "capacity": 97
-    }
-  ],
-  "operations_downtime_tracker": [
-    {
-      "issue": "Machine Calibration Required",
-      "location": "Soldering Line 2",
-      "est_time": "1-2 hrs",
-      "confidence": 95
-    },
-    {
-      "issue": "Component Shortage",
-      "location": "PCB Assembly",
-      "est_time": "0-1 hr",
-      "confidence": 92
-    },
-    {
-      "issue": "Quality Control Hold",
-      "location": "Testing Bay 3",
-      "est_time": "1-2 hrs",
-      "confidence": 85
-    },
-    {
-      "issue": "Scheduled Maintenance",
-      "location": "Packaging Line 1",
-      "est_time": "32 min",
-      "confidence": 100
-    },
-    {
-      "issue": "Bearing Failure Warning",
-      "location": "CNC Mill 5",
-      "est_time": "3-4 hrs",
-      "confidence": 78
-    },
-    {
-      "issue": "Sensor Recalibration",
-      "location": "Heat Treatment",
-      "est_time": "15 min",
-      "confidence": 91
-    },
-    {
-      "issue": "Firmware Patch Update",
-      "location": "Avionics Testing",
-      "est_time": "45 min",
-      "confidence": 99
-    },
-    {
-      "issue": "Conveyor Belt Slack",
-      "location": "Final Inspection",
-      "est_time": "20 min",
-      "confidence": 88
-    },
-    {
-      "issue": "Cooling System Leak",
-      "location": "Soldering Station 4",
-      "est_time": "1 hr",
-      "confidence": 82
-    },
-    {
-      "issue": "Emergency Backup Test",
-      "location": "Facility-Wide",
-      "est_time": "10 min",
-      "confidence": 100
-    }
-  ],
+
+  "kpi_snapshot": {
+    "oee_pct": 81,
+    "oee_trend": "+2.4%",
+    "throughput_pct": 94,
+    "throughput_trend": "+1.2%",
+    "yield_rate_pct": 97.3,
+    "yield_trend": "+0.8%"
+  },
+
   "operations_recommendations": [
     {
-      "action": "Move Line 7 technicians to Line 3",
-      "impact": "Efficiency +8%; uptime gain +5h",
+      "id": "REC01",
+      "icon": "person_add",
+      "title": "Reassign Technicians",
+      "description": "Reassign 2 technicians from Line 4 to Line 2 to mitigate predicted slowdown.",
+      "priority": "High",
       "confidence": 87,
-      "priority": "High"
+      "impact": "Efficiency +8%; uptime gain +5h"
     },
     {
-      "action": "Expedite repair for Machine 4",
-      "impact": "Downtime prevention; temperature variant detected",
+      "id": "REC02",
+      "icon": "settings_suggest",
+      "title": "Optimize Flow",
+      "description": "Reduce conveyor speed on Line 2 by 15% to sync with Stage 4 inspection bottleneck.",
+      "priority": "High",
       "confidence": 91,
-      "priority": "Medium"
+      "impact": "Bottleneck reduction; -4.2 min avg wait time"
     },
     {
-      "action": "Calibrate sensor suite for Testing Bay 6",
-      "impact": "Reduced defect alerts by 45%",
-      "confidence": 74,
-      "priority": "High"
-    },
-    {
-      "action": "Update testing parameters",
-      "impact": "Improved custom drone accuracy",
-      "confidence": 89,
-      "priority": "Low"
-    },
-    {
-      "action": "Switch to solar energy grid",
-      "impact": "₹3,200/hr cost reduction",
-      "confidence": 98,
-      "priority": "Medium"
-    },
-    {
-      "action": "Reorder Microcontrollers from AlphaTech",
-      "impact": "Avoid stockout in 72 hours",
-      "confidence": 96,
-      "priority": "High"
-    },
-    {
-      "action": "Initiate worker fatigue rotation",
-      "impact": "Yield rate stability +3%",
+      "id": "REC03",
+      "icon": "build",
+      "title": "Preemptive Maint.",
+      "description": "Schedule Line 2 nozzle cleaning during the 13:00 break window.",
+      "priority": "Medium",
       "confidence": 82,
-      "priority": "Medium"
-    },
-    {
-      "action": "Reroute PCB batch to Station C",
-      "impact": "Bottleck reduction; save 15 min cycle time",
-      "confidence": 93,
-      "priority": "Medium"
-    },
-    {
-      "action": "Schedule autoclave maintenance",
-      "impact": "Prevent carbon fiber curing defects",
-      "confidence": 77,
-      "priority": "Low"
-    },
-    {
-      "action": "Activate reserve CNC machine",
-      "impact": "Meet urgent order deadline",
-      "confidence": 95,
-      "priority": "High"
+      "impact": "Prevent predicted downtime; avoid 45-min stoppage"
     }
   ],
-  "bottleneck_heatmap": [
+
+  "downtime_alert_detail": {
+    "alert_id": "ALT001",
+    "machine_id": "SM-04",
+    "machine_name": "Soldering Machine SM-04",
+    "ai_confidence": 92,
+    "criticality": "High",
+    "priority": 1,
+    "sensor_readings": {
+      "temperature_c": 187,
+      "temperature_threshold_c": 180,
+      "vibration_index": 3.2,
+      "vibration_target": 2.5,
+      "runtime_hrs": 847,
+      "service_due_hrs": 850
+    },
+    "ai_prediction": "Heater element failure predicted within 2.4 hours based on thermal fluctuations and vibration patterns.",
+    "options": [
+      {
+        "option": "A",
+        "title": "Dispatch Technician + Calibration",
+        "downtime_min": 45,
+        "cost_inr": 12000,
+        "success_rate_pct": 98,
+        "recommended": true
+      },
+      {
+        "option": "B",
+        "title": "Defer 4hrs + Monitor",
+        "downtime_min": 0,
+        "risk_factor": "Extreme",
+        "recommended": false
+      }
+    ],
+    "affected_batches": [
+      { "batch_id": "B-9401", "shift": "B (Afternoon)", "status": "In Repair" },
+      { "batch_id": "B-9402", "shift": "B (Afternoon)", "status": "Delay Risk" }
+    ]
+  },
+
+  "mobile_chat_messages": [
     {
-      "station": "Component Prep",
-      "cycle_time": "2.2 hrs",
-      "efficiency": "2.15 hrs",
-      "priority": "Low"
+      "id": "MSG01",
+      "sender": "AI",
+      "text": "Worker Fatigue Alert — Assembly Station 5. Ravi Kumar has logged 3 errors in the last 30 min. Recommended: Reassign to Testing Bench.",
+      "timestamp": "10:02 AM",
+      "alert_type": "fatigue",
+      "requires_action": true
     },
     {
-      "station": "PCB Mounting",
-      "cycle_time": "1.9 hrs",
-      "efficiency": "1.2 hrs",
-      "priority": "Low"
+      "id": "MSG02",
+      "sender": "Supervisor",
+      "text": "Got it. Reassign confirmed.",
+      "timestamp": "10:03 AM",
+      "requires_action": false
     },
     {
-      "station": "Heat Sink",
-      "cycle_time": "3.1 hrs",
-      "efficiency": "2.65 hrs",
-      "priority": "Low"
+      "id": "MSG03",
+      "sender": "AI",
+      "text": "Done. Production schedule updated. Station 5 now assigned to Priya Singh.",
+      "timestamp": "10:03 AM",
+      "requires_action": false
     },
     {
-      "station": "Interconnects",
-      "cycle_time": "2.6 hrs",
-      "efficiency": "2.05 hrs",
-      "priority": "Low"
-    },
-    {
-      "station": "Testing",
-      "cycle_time": "8.2 hrs",
-      "efficiency": "7.1 hrs",
-      "priority": "Medium"
-    },
-    {
-      "station": "Quality Check",
-      "cycle_time": "3.4 hrs",
-      "efficiency": "3.45 hrs",
-      "priority": "Low"
-    },
-    {
-      "station": "Soldering",
-      "cycle_time": "5.2 hrs",
-      "efficiency": "5.16 hrs",
-      "priority": "High"
-    },
-    {
-      "station": "Heat Treat",
-      "cycle_time": "12.2 hrs",
-      "efficiency": "10.1 hrs",
-      "priority": "High"
-    },
-    {
-      "station": "Packaging",
-      "cycle_time": "1.7 hrs",
-      "efficiency": "1.43 hrs",
-      "priority": "High"
-    },
-    {
-      "station": "Final Inspection",
-      "cycle_time": "2.6 hrs",
-      "efficiency": "2.3 hrs",
-      "priority": "Low"
+      "id": "MSG04",
+      "sender": "AI",
+      "text": "Machine M-07 showing vibration spike. Suggest requesting maintenance.",
+      "timestamp": "10:05 AM",
+      "alert_type": "maintenance",
+      "requires_action": true
     }
   ],
-  "line_status": [
+
+  "mobile_quick_actions": [
+    { "id": "QA01", "label": "Reassign Worker",     "icon": "person_add",  "category": "primary" },
+    { "id": "QA02", "label": "Log Defect",          "icon": "photo_camera","category": "primary" },
+    { "id": "QA03", "label": "Request Maintenance", "icon": "engineering", "category": "tertiary" },
+    { "id": "QA04", "label": "Approve Overtime",    "icon": "verified",    "category": "tertiary" }
+  ],
+
+  "shift_planner": {
+    "shift_id": "SH002",
+    "shift_name": "Shift 2",
+    "time": "14:00–22:00",
+    "total_workers": 18,
+    "ai_optimizations_applied": 4,
+    "workers": [
+      {
+        "worker_id": "W001",
+        "name": "Ankit Sharma",
+        "current_station": "PCB Loading",
+        "suggested_station": "Quality Inspection",
+        "status": "Active",
+        "ai_suggestion": true,
+        "fatigue_flag": true,
+        "fatigue_note": "Biometric data suggests a break or rotation to a less intensive station."
+      },
+      {
+        "worker_id": "W002",
+        "name": "Priya Das",
+        "current_station": "Final Assembly",
+        "previous_station": "Quality Inspection",
+        "status": "Reassigned",
+        "ai_suggestion": false,
+        "fatigue_flag": false
+      },
+      {
+        "worker_id": "W003",
+        "name": "Rahul Mehta",
+        "current_station": "Motor Mounting",
+        "rotation_suggestion": "Power Systems",
+        "rotation_time": "16:30",
+        "status": "Break",
+        "ai_suggestion": false,
+        "fatigue_flag": false
+      },
+      {
+        "worker_id": "W004",
+        "name": "Vikram Singh",
+        "current_station": "Firmware Flash",
+        "status": "Active",
+        "ai_suggestion": false,
+        "fatigue_flag": false
+      },
+      {
+        "worker_id": "W005",
+        "name": "Sanya Malhotra",
+        "current_station": "Payload Calibration",
+        "status": "Active",
+        "ai_suggestion": false,
+        "fatigue_flag": false
+      }
+    ]
+  },
+
+  "mobile_home_alerts": [
+    { "id": "AL01", "type": "Critical",   "message": "Machine 4 overheating risk detected",         "timestamp": "5m ago",  "details": "Current temperature: 85°C. Suggest shift cooling system." },
+    { "id": "AL02", "type": "Update",     "message": "Afternoon Shift Worker reallotted to Machine 4","timestamp": "15m ago", "details": "Ravi Kumar reassigned from Assembly Station 5 to Testing Bench." },
+    { "id": "AL03", "type": "Efficiency", "message": "Line efficiency is at 94% today",              "timestamp": "1h ago",  "details": "2% above target. Great work boosting the floor!" },
+    { "id": "AL04", "type": "Warning",    "message": "Solder paste depletion on Line 2",             "timestamp": "10m ago", "details": "Estimated 20 minutes remaining at current throughput." },
+    { "id": "AL05", "type": "Critical",   "message": "Conveyor jam detected - Packaging Line 1",     "timestamp": "2m ago",  "details": "AI sensing motor resistance. Stop protocol recommended." },
+    { "id": "AL06", "type": "Update",     "message": "Training Session — New Protocol",              "timestamp": "45m ago", "details": "Session moved to 3:00 PM in Breakroom B." },
+    { "id": "AL07", "type": "Warning",    "message": "Humidity threshold exceeded in Clean Room",    "timestamp": "12m ago", "details": "Currently 62%. Sensor suggests HVAC recalibration." },
+    { "id": "AL08", "type": "Efficiency", "message": "Energy optimization active",                   "timestamp": "30m ago", "details": "Switched to solar grid. Expected saving: ₹2,400/hr." },
+    { "id": "AL09", "type": "Update",     "message": "Batch #B-9401 completed",                      "timestamp": "8m ago",  "details": "98% yield rate recorded for multi-rotor assembly." },
+    { "id": "AL10", "type": "Critical",   "message": "Emergency Stop — Soldering Station 3",        "timestamp": "1m ago",  "details": "Manual override triggered by Operator Kevin Lee." }
+  ],
+
+  "mobile_tasks": [
+    { "id": "T01", "title": "QC Inspection — Batch #B-9401", "assignee": "Deepa M.",       "station": "PCB Inspection", "priority": "High",   "duration": "45 min" },
+    { "id": "T02", "title": "Inventory Count — Raw Materials","assignee": "Neha Joshi",     "station": "Warehouse",      "priority": "Medium", "duration": "10 min" },
+    { "id": "T03", "title": "Machine Calibration — SM-04",   "assignee": "Ankit Sharma",   "station": "Soldering Stn",  "priority": "High",   "duration": "60 min" },
+    { "id": "T04", "title": "Training Session — New Protocol","assignee": "Shift 2 Team",   "station": "Training Hall",  "priority": "Low",    "duration": "30 min" },
+    { "id": "T05", "title": "Safety Inspection — SMT Line",  "assignee": "Priya Das",      "station": "SMT 1",          "priority": "High",   "duration": "20 min" },
+    { "id": "T06", "title": "Component Retrieval — MCUs",    "assignee": "Neha Joshi",     "station": "Loading Dock",   "priority": "Medium", "duration": "15 min" },
+    { "id": "T07", "title": "Tooling Reset — Pick & Place",  "assignee": "Vikram Singh",   "station": "PCB Assembly",   "priority": "High",   "duration": "40 min" },
+    { "id": "T08", "title": "Waste Disposal — Chemical",     "assignee": "Maintenance",    "station": "Outside",        "priority": "Low",    "duration": "25 min" },
+    { "id": "T09", "title": "Firmware Upload — Batch #1248", "assignee": "Vikram Singh",   "station": "Testing Bay",    "priority": "Medium", "duration": "50 min" },
+    { "id": "T10", "title": "End of Shift Handover",         "assignee": "All Supervisors","station": "Main Office",    "priority": "High",   "duration": "15 min" }
+  ],
+
+  "mobile_defects": [
+    { "id": "D01", "type": "Cold Solder Joint",     "board_id": "#B-2047", "batch": "#B-9401", "severity": "High",   "timestamp": "10:05", "station": "PCB Inspection", "confidence_pct": 97 },
+    { "id": "D02", "type": "Misaligned Component",  "board_id": "#B-2046", "batch": "#B-9401", "severity": "Medium", "timestamp": "09:45", "station": "SMT",             "confidence_pct": 89 },
+    { "id": "D03", "type": "Missing Screw",         "board_id": "#B-2044", "batch": "#B-9400", "severity": "Low",    "timestamp": "09:30", "station": "Final Assembly",  "confidence_pct": 95 },
+    { "id": "D04", "type": "Surface Scratch",       "board_id": "#B-2043", "batch": "#B-9401", "severity": "Low",    "timestamp": "09:15", "station": "Packaging",       "confidence_pct": 92 },
+    { "id": "D05", "type": "Cracked Frame",         "board_id": "#B-2040", "batch": "#B-9398", "severity": "High",   "timestamp": "08:02", "station": "Airframe Fit",    "confidence_pct": 96 },
+    { "id": "D06", "type": "Defective ESC",         "board_id": "#B-2042", "batch": "#B-9401", "severity": "High",   "timestamp": "07:45", "station": "Testing",         "confidence_pct": 98 },
+    { "id": "D07", "type": "Loose Connection",      "board_id": "#B-2041", "batch": "#B-9401", "severity": "Medium", "timestamp": "07:20", "station": "Interconnects",   "confidence_pct": 85 }
+  ],
+
+  "qc_inspection": {
+    "line": "Line 3",
+    "area": "PCB Assembly",
+    "live": true,
+    "line_speed_mps": 1.2,
+    "temp_c": 24.5,
+    "today_summary": {
+      "inspected": 412,
+      "defects": 7,
+      "pass_rate_pct": 98.3
+    },
+    "latest_defect": {
+      "board_id": "#B-2047",
+      "defect_type": "Cold Solder Joint",
+      "confidence_pct": 97,
+      "location_pin": "J12-Pin3",
+      "coordinates": "X:412 Y:882",
+      "severity": "Urgent",
+      "recommended_action": "Rework Station 2 — Reflow segment verification required.",
+      "assigned_to": "Deepa M.",
+      "assigned_role": "QC Lead"
+    },
+    "inspection_history": [
+      { "board_id": "#B-2040", "result": "Pass" },
+      { "board_id": "#B-2041", "result": "Pass" },
+      { "board_id": "#B-2042", "result": "Fail" },
+      { "board_id": "#B-2043", "result": "Pass" },
+      { "board_id": "#B-2044", "result": "Pass" },
+      { "board_id": "#B-2045", "result": "Pass" },
+      { "board_id": "#B-2046", "result": "Pass" },
+      { "board_id": "#B-2047", "result": "Live" }
+    ],
+    "defect_trend_7days": [
+      { "day": "Mon", "defects": 18 },
+      { "day": "Tue", "defects": 14 },
+      { "day": "Wed", "defects": 17 },
+      { "day": "Thu", "defects": 10 },
+      { "day": "Fri", "defects": 7  },
+      { "day": "Sat", "defects": 5  },
+      { "day": "Today","defects": 7 }
+    ],
+    "defect_trend_change_pct": -12.4
+  },
+
+  "supply_chain_vendors": [
     {
-      "station": "PCB Assembly",
-      "status": "Operational",
-      "efficiency": 94,
-      "units": "1,940/2,000"
+      "vendor_id": "V001",
+      "name": "ElectroPro",
+      "category": "Integrated Circuits & MCUs",
+      "health": "Critical",
+      "on_time_pct": 72,
+      "defect_rate_pct": 1.2,
+      "lead_time_days": 11,
+      "active_alert": "Predicted 5-day delay on MCU shipment.",
+      "reliability": 72
     },
     {
-      "station": "Soldering",
-      "status": "Warning",
-      "efficiency": 72,
-      "units": "720/1,000"
+      "vendor_id": "V002",
+      "name": "TechParts India",
+      "category": "Mechanical Assemblies",
+      "health": "Healthy",
+      "on_time_pct": 89,
+      "defect_rate_pct": 0.8,
+      "lead_time_days": 6,
+      "active_alert": null,
+      "reliability": 89
     },
     {
-      "station": "Testing",
-      "status": "Operational",
-      "efficiency": 96,
-      "units": "1,840/1,750"
+      "vendor_id": "V003",
+      "name": "SensorWorld",
+      "category": "Precision Avionics",
+      "health": "Observation",
+      "on_time_pct": 84,
+      "defect_rate_pct": 2.1,
+      "lead_time_days": 9,
+      "active_alert": "Slight increase in defect rate detected.",
+      "reliability": 84
     },
     {
-      "station": "Packaging",
-      "status": "Critical",
-      "efficiency": 65,
-      "units": "650/1,000"
+      "vendor_id": "V004",
+      "name": "SkyDynamics",
+      "category": "Propulsion Systems",
+      "health": "Healthy",
+      "on_time_pct": 96,
+      "defect_rate_pct": 0.4,
+      "lead_time_days": 4,
+      "active_alert": null,
+      "reliability": 96
     },
     {
-      "station": "Injection Moulding",
-      "status": "Operational",
-      "efficiency": 88,
-      "units": "500/550"
+      "vendor_id": "V005",
+      "name": "PowerCell Lab",
+      "category": "Battery Management Systems",
+      "health": "Healthy",
+      "on_time_pct": 92,
+      "defect_rate_pct": 0.9,
+      "lead_time_days": 7,
+      "active_alert": null,
+      "reliability": 92
     },
     {
-      "station": "CNC Mill 1",
-      "status": "Operational",
-      "efficiency": 91,
-      "units": "120/130"
-    },
-    {
-      "station": "Laser Cutting",
-      "status": "Warning",
-      "efficiency": 79,
-      "units": "210/250"
-    },
-    {
-      "station": "Heat Treat 1",
-      "status": "Operational",
-      "efficiency": 95,
-      "units": "400/400"
-    },
-    {
-      "station": "Final Inspection",
-      "status": "Operational",
-      "efficiency": 98,
-      "units": "1,800/1,800"
-    },
-    {
-      "station": "Shipping Dock",
-      "status": "Operational",
-      "efficiency": 100,
-      "units": "15/15 batches"
+      "vendor_id": "V006",
+      "name": "Bharat Fiber",
+      "category": "Airframe Composites",
+      "health": "Observation",
+      "on_time_pct": 79,
+      "defect_rate_pct": 1.1,
+      "lead_time_days": 14,
+      "active_alert": "Logistic bottlenecks in Western region.",
+      "reliability": 79
     }
+  ],
+
+  "supply_chain_inventory": [
+    { "component": "Microcontrollers STM32",    "days_in_stock": 12, "status": "Healthy",  "stock_fill_pct": 60 },
+    { "component": "BLDC Motors",               "days_in_stock": 4,  "status": "Critical", "stock_fill_pct": 20 },
+    { "component": "IMU Sensors",               "days_in_stock": 8,  "status": "Warning",  "stock_fill_pct": 40 },
+    { "component": "LiPo Battery Cells",        "days_in_stock": 18, "status": "Healthy",  "stock_fill_pct": 85 },
+    { "component": "GPS Modules",               "days_in_stock": 14, "status": "Healthy",  "stock_fill_pct": 70 },
+    { "component": "Electronic Speed Controllers","days_in_stock": 6, "status": "Warning",  "stock_fill_pct": 30 },
+    { "component": "Carbon Fiber Sheets",       "days_in_stock": 3,  "status": "Critical", "stock_fill_pct": 15 },
+    { "component": "Wiring Harnesses",          "days_in_stock": 22, "status": "Healthy",  "stock_fill_pct": 90 }
+  ],
+
+  "vendor_ai_alert": {
+    "vendor": "ElectroPro",
+    "component": "MCU-2024",
+    "issue": "Delivery delayed.",
+    "recommendation": "Recommend switching to Alternate Vendor B (Swift Electronics).",
+    "cost_delta_inr": 8400
+  },
+
+  "cost_simulator": {
+    "components": ["MCU-2024 (STM32)", "BLDC Core 2212"],
+    "vendors": ["Alternate Vendor B", "ElectroPro"],
+    "default_quantity": 1200,
+    "comparison": [
+      {
+        "vendor": "Vendor A (ElectroPro)",
+        "cost_inr": 144000,
+        "label": "Standard Rate"
+      },
+      {
+        "vendor": "Vendor B (Swift Electronics)",
+        "cost_inr": 152400,
+        "delta_inr": 8400,
+        "label": "AI Recommended"
+      }
+    ],
+    "ai_recommendation": "Accept Vendor B proposal. The cost increase is offset by preventing a 5-day drone assembly line halt estimated at ₹45,000."
+  },
+
+  "procurement_confirmation": {
+    "po_id": "PO-2024-0412",
+    "component": "BLDC Motors 2306",
+    "quantity": 500,
+    "vendor": "DriveCore Supplies",
+    "lead_time_days": 7,
+    "estimated_cost_inr": 184000,
+    "ai_confidence_pct": 91,
+    "trigger_reason": "critical stock risk for Phase 2 Drone Assembly",
+    "erp_integration": "Microsoft Dynamics 365",
+    "erp_enabled": true
+  },
+
+  "operations_downtime_tracker": [
+    { "issue": "Soldering Machine Calibration", "location": "Soldering Station 2 (SM-04)", "est_time": "2.4 hrs", "confidence": 92 },
+    { "issue": "Pick-and-Place Sensor Drift",   "location": "PCB Assembly Line 2",         "est_time": "3.5 hrs", "confidence": 79 },
+    { "issue": "Reflow Oven Temp Variance",     "location": "Soldering Station 1",         "est_time": "5.0 hrs", "confidence": 71 },
+    { "issue": "Component Shortage — BLDC",    "location": "Motor Mounting Station",       "est_time": "1-2 days","confidence": 95 },
+    { "issue": "Firmware Patch Update",         "location": "Avionics Testing Bay",        "est_time": "45 min",  "confidence": 99 },
+    { "issue": "PCB Inspection Bottleneck",     "location": "PCB Inspection Stage 4",      "est_time": "Ongoing", "confidence": 88 }
   ]
 }

@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DroneOpsAI - Industrial Operations Dashboard</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Space+Grotesk:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<!-- Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-tint": "#545f73",
+                      "error-container": "#ffdad6",
+                      "surface-container-low": "#f3f4f6",
+                      "on-primary-container": "#8590a6",
+                      "secondary-container": "#d5e3fd",
+                      "on-background": "#191c1e",
+                      "inverse-surface": "#2e3132",
+                      "on-error-container": "#93000a",
+                      "tertiary-fixed": "#ffdbca",
+                      "on-tertiary-fixed-variant": "#783200",
+                      "surface-container-lowest": "#ffffff",
+                      "tertiary-fixed-dim": "#ffb690",
+                      "on-primary-fixed": "#111c2d",
+                      "on-error": "#ffffff",
+                      "on-surface-variant": "#45474c",
+                      "on-tertiary-fixed": "#341100",
+                      "on-secondary-fixed-variant": "#3a485c",
+                      "surface-bright": "#f8f9fb",
+                      "surface-variant": "#e1e2e4",
+                      "outline-variant": "#c5c6cd",
+                      "tertiary-container": "#481b00",
+                      "secondary": "#515f74",
+                      "primary-fixed-dim": "#bcc7de",
+                      "on-secondary": "#ffffff",
+                      "on-tertiary-container": "#eb6905",
+                      "secondary-fixed-dim": "#b9c7e0",
+                      "primary-container": "#1e293b",
+                      "background": "#f8f9fb",
+                      "surface-container": "#edeef0",
+                      "primary-fixed": "#d8e3fb",
+                      "on-primary-fixed-variant": "#3c475a",
+                      "primary": "#091426",
+                      "on-secondary-container": "#57657b",
+                      "inverse-on-surface": "#f0f1f3",
+                      "surface-container-highest": "#e1e2e4",
+                      "on-surface": "#191c1e",
+                      "surface": "#f8f9fb",
+                      "surface-dim": "#d9dadc",
+                      "on-secondary-fixed": "#0d1c2f",
+                      "outline": "#75777d",
+                      "on-tertiary": "#ffffff",
+                      "error": "#ba1a1a",
+                      "surface-container-high": "#e7e8ea",
+                      "on-primary": "#ffffff",
+                      "secondary-fixed": "#d5e3fd",
+                      "inverse-primary": "#bcc7de",
+                      "tertiary": "#280c00"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.8rem",
+                      "xl": "1rem",
+                      "full": "9999px"
+              },
+              "fontFamily": {
+                      "headline": ["Space Grotesk"],
+                      "body": ["Inter"],
+                      "label": ["Inter"]
+              }
+            },
+          }
+        }
+      </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .cognitive-gradient {
+            background: linear-gradient(135deg, #091426 0%, #1e293b 100%);
+        }
+        .glass-nav {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+      </style>
+</head>
+<body class="bg-surface font-body text-on-surface antialiased">
+<!-- TopNavBar -->
+<nav class="bg-slate-50/70 dark:bg-slate-900/70 backdrop-blur-xl docked full-width top-0 z-50 flex justify-between items-center w-full px-6 py-3 max-w-full sticky">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-2 text-xl font-bold text-slate-900 dark:text-slate-50 font-headline">
+<span class="material-symbols-outlined text-primary" data-icon="psychology">psychology</span>
+<span>DroneOpsAI</span>
+<span class="h-2 w-2 rounded-full bg-on-tertiary-container"></span>
+</div>
+<!-- Plant Selector -->
+<div class="flex items-center gap-3 px-3 py-1.5 bg-surface-container-low rounded-lg cursor-pointer">
+<img class="w-6 h-6 rounded shadow-sm object-cover" data-alt="Microchip manufacturing plant clean room interior with soft blue industrial lighting and robotic arms" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBCt5pPEWR_jxFxOPbh0ZQnqN9lc50yGQM76nSj7QV3O--qYS2OzKsga7VmqvLwjrj7LIlmQfFYCWAKVUuErjVRIcglrVvko78WE__hAH9GL8vcSdGeoj1cNQDcJFDdR1gPRS307sCaNyqKaZOWBiDkwahQZ1af8NX7z5f2MjRjjJ8e1Mvs5ory9FObIPjSdUyMQsJMbmzLrqB58b9OkCxqBt-wWzzgAY96zGyqr7c23EB-xrywjOBWS3E02-6097nkfpBHskwbENQ"/>
+<div class="flex flex-col">
+<span class="text-xs font-bold leading-tight">Plant 1</span>
+<span class="text-[10px] text-on-surface-variant leading-tight">Bengaluru, KA</span>
+</div>
+<span class="material-symbols-outlined text-sm" data-icon="expand_more">expand_more</span>
+</div>
+<div class="hidden md:flex items-center gap-6">
+<a class="text-slate-900 dark:white border-b-2 border-orange-600 pb-1 font-['Space_Grotesk'] text-sm font-medium tracking-tight" href="#">Dashboard</a>
+<a class="text-slate-500 dark:text-slate-400 pb-1 font-['Space_Grotesk'] text-sm font-medium tracking-tight hover:text-orange-500 transition-colors duration-200" href="#">Analytics</a>
+<a class="text-slate-500 dark:text-slate-400 pb-1 font-['Space_Grotesk'] text-sm font-medium tracking-tight hover:text-orange-500 transition-colors duration-200" href="#">Logistics</a>
+<a class="text-slate-500 dark:text-slate-400 pb-1 font-['Space_Grotesk'] text-sm font-medium tracking-tight hover:text-orange-500 transition-colors duration-200" href="#">Fleet</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative p-2 hover:bg-surface-container transition-colors rounded-full cursor-pointer">
+<span class="material-symbols-outlined text-slate-900" data-icon="notifications">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-4 h-4 bg-error text-[10px] text-white flex items-center justify-center rounded-full font-bold">3</span>
+</div>
+<div class="flex items-center gap-3 pl-4 border-l border-outline-variant/20">
+<div class="text-right hidden sm:block">
+<p class="text-xs font-bold">Arjun Mehta</p>
+<p class="text-[10px] text-on-surface-variant">Ops Manager</p>
+</div>
+<img alt="User profile with active status" class="w-9 h-9 rounded-full border-2 border-surface-container-highest object-cover" data-alt="professional headshot of an indian male operations manager with a confident and calm expression" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBvrOvN71th0_w-ZHUC-zghizUsVm4E-WPUCRbo-Fpe4Wp3YN5Sg-PvjYmRHpr1i0SsTmcZfUZV2EZLXflGVS-h8v1i8FuMsL4Q53mJlBfsnLSmxo6SOPekYh8ChSH0H9a-bkm3w34iJX9PFRyWLKQ8JnpXBeO3zZDYN4zIcdTAS7DTw8qZubci62EtDEhoahJl69nxA-hpt_lNshfcuDOBM-4WstM4kAxOcuXOpcrChnwHPCvMsF4nffwGPkglkB4Rg3-ZXPWxQOk"/>
+</div>
+</div>
+</nav>
+<!-- Global Alert Banner -->
+<div class="bg-tertiary-fixed border-l-4 border-on-tertiary-container px-6 py-3 flex items-center justify-between mx-6 mt-4 rounded-lg shadow-sm">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-tertiary-fixed-variant" data-icon="warning">warning</span>
+<p class="text-sm font-medium text-on-tertiary-fixed">
+<span class="font-bold">AI Alert: PCB Assembly Line 2</span> – Predicted slowdown in 2h. Confidence: 80%. Recommended: Schedule calibration during low-load window.
+            </p>
+</div>
+<button class="text-xs font-bold text-on-tertiary-fixed-variant uppercase tracking-wider hover:underline">Take Action</button>
+</div>
+<!-- Main Content Canvas -->
+<main class="p-6 grid grid-cols-12 gap-6">
+<!-- Left Column: Line Status -->
+<div class="col-span-12 lg:col-span-3 flex flex-col gap-4">
+<h2 class="font-headline text-lg font-bold tracking-tight text-primary mb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-base" data-icon="factory">factory</span>
+                Production Lines
+            </h2>
+<!-- PCB Assembly Card -->
+<div class="bg-surface-container-lowest p-4 rounded-xl shadow-[0_8px_32px_rgba(9,20,38,0.04)] border-l-4 border-green-500">
+<div class="flex justify-between items-start mb-3">
+<div>
+<h3 class="text-sm font-bold text-primary leading-tight">PCB Assembly</h3>
+<span class="text-[10px] font-bold text-green-600 bg-green-50 px-1.5 py-0.5 rounded">OPTIMAL</span>
+</div>
+<div class="text-right">
+<span class="text-lg font-bold font-headline text-primary">94%</span>
+<p class="text-[10px] text-on-surface-variant">Efficiency</p>
+</div>
+</div>
+<div class="h-8 w-full bg-surface-container-low rounded relative overflow-hidden flex items-end">
+<div class="absolute inset-0 flex items-center px-2 pointer-events-none">
+<span class="text-[9px] font-bold text-on-surface-variant">THROUGHPUT: 142 units/hr</span>
+</div>
+<!-- Minimal Sparkline Simulation -->
+<div class="flex items-end gap-0.5 h-full w-full px-1">
+<div class="flex-1 bg-green-200 h-[60%] rounded-t-sm"></div>
+<div class="flex-1 bg-green-200 h-[75%] rounded-t-sm"></div>
+<div class="flex-1 bg-green-300 h-[70%] rounded-t-sm"></div>
+<div class="flex-1 bg-green-400 h-[85%] rounded-t-sm"></div>
+<div class="flex-1 bg-green-500 h-[94%] rounded-t-sm"></div>
+</div>
+</div>
+</div>
+<!-- Soldering Station Card (Warning) -->
+<div class="bg-surface-container-lowest p-4 rounded-xl shadow-[0_8px_32px_rgba(9,20,38,0.04)] border-l-4 border-on-tertiary-container relative">
+<div class="flex justify-between items-start mb-3">
+<div>
+<h3 class="text-sm font-bold text-primary leading-tight">Soldering Station</h3>
+<div class="flex items-center gap-1">
+<span class="text-[10px] font-bold text-on-tertiary-container bg-tertiary-fixed px-1.5 py-0.5 rounded">WARNING</span>
+<span class="material-symbols-outlined text-on-tertiary-container text-xs" data-icon="report_problem">report_problem</span>
+</div>
+</div>
+<div class="text-right">
+<span class="text-lg font-bold font-headline text-on-tertiary-container">72%</span>
+<p class="text-[10px] text-on-surface-variant">Efficiency</p>
+</div>
+</div>
+<div class="h-8 w-full bg-surface-container-low rounded relative overflow-hidden flex items-end">
+<div class="absolute inset-0 flex items-center px-2 pointer-events-none">
+<span class="text-[9px] font-bold text-on-surface-variant">THROUGHPUT: 98 units/hr</span>
+</div>
+<div class="flex items-end gap-0.5 h-full w-full px-1">
+<div class="flex-1 bg-orange-200 h-[90%] rounded-t-sm"></div>
+<div class="flex-1 bg-orange-300 h-[85%] rounded-t-sm"></div>
+<div class="flex-1 bg-orange-400 h-[60%] rounded-t-sm"></div>
+<div class="flex-1 bg-orange-400 h-[50%] rounded-t-sm"></div>
+<div class="flex-1 bg-orange-500 h-[45%] rounded-t-sm"></div>
+</div>
+</div>
+</div>
+<!-- Component Testing -->
+<div class="bg-surface-container-lowest p-4 rounded-xl shadow-[0_8px_32px_rgba(9,20,38,0.04)] border-l-4 border-green-500">
+<div class="flex justify-between items-start mb-3">
+<div>
+<h3 class="text-sm font-bold text-primary leading-tight">Component Testing</h3>
+<span class="text-[10px] font-bold text-green-600 bg-green-50 px-1.5 py-0.5 rounded">OPTIMAL</span>
+</div>
+<div class="text-right">
+<span class="text-lg font-bold font-headline text-primary">88%</span>
+<p class="text-[10px] text-on-surface-variant">Efficiency</p>
+</div>
+</div>
+<div class="h-8 w-full bg-surface-container-low rounded relative overflow-hidden flex items-end">
+<div class="absolute inset-0 flex items-center px-2 pointer-events-none">
+<span class="text-[9px] font-bold text-on-surface-variant">THROUGHPUT: 110 units/hr</span>
+</div>
+<div class="flex items-end gap-0.5 h-full w-full px-1">
+<div class="flex-1 bg-green-200 h-[80%] rounded-t-sm"></div>
+<div class="flex-1 bg-green-300 h-[85%] rounded-t-sm"></div>
+<div class="flex-1 bg-green-300 h-[82%] rounded-t-sm"></div>
+<div class="flex-1 bg-green-400 h-[88%] rounded-t-sm"></div>
+<div class="flex-1 bg-green-500 h-[88%] rounded-t-sm"></div>
+</div>
+</div>
+</div>
+<!-- Final Packaging -->
+<div class="bg-surface-container-lowest p-4 rounded-xl shadow-[0_8px_32px_rgba(9,20,38,0.04)] border-l-4 border-green-500">
+<div class="flex justify-between items-start mb-3">
+<div>
+<h3 class="text-sm font-bold text-primary leading-tight">Final Packaging</h3>
+<span class="text-[10px] font-bold text-green-600 bg-green-50 px-1.5 py-0.5 rounded">OPTIMAL</span>
+</div>
+<div class="text-right">
+<span class="text-lg font-bold font-headline text-primary">96%</span>
+<p class="text-[10px] text-on-surface-variant">Efficiency</p>
+</div>
+</div>
+<div class="h-8 w-full bg-surface-container-low rounded relative overflow-hidden flex items-end">
+<div class="absolute inset-0 flex items-center px-2 pointer-events-none">
+<span class="text-[9px] font-bold text-on-surface-variant">THROUGHPUT: 204 units/hr</span>
+</div>
+<div class="flex items-end gap-0.5 h-full w-full px-1">
+<div class="flex-1 bg-green-200 h-[90%] rounded-t-sm"></div>
+<div class="flex-1 bg-green-200 h-[92%] rounded-t-sm"></div>
+<div class="flex-1 bg-green-300 h-[95%] rounded-t-sm"></div>
+<div class="flex-1 bg-green-400 h-[96%] rounded-t-sm"></div>
+<div class="flex-1 bg-green-500 h-[96%] rounded-t-sm"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Center Column: Bottleneck Heatmap & AI Tracker -->
+<div class="col-span-12 lg:col-span-6 flex flex-col gap-6">
+<!-- Bottleneck Heatmap -->
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-[0_8px_48px_rgba(9,20,38,0.03)] border border-outline-variant/10">
+<div class="flex justify-between items-center mb-6">
+<div>
+<h2 class="font-headline text-lg font-bold tracking-tight text-primary">Bottleneck Heatmap</h2>
+<p class="text-xs text-on-surface-variant">Real-time wait times across assembly stages</p>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="info">info</span>
+</div>
+<div class="flex flex-col gap-2">
+<div class="grid grid-cols-6 gap-1 h-12">
+<div class="bg-green-500/10 border-b-4 border-green-500 rounded-t flex items-center justify-center">
+<span class="text-[9px] font-bold text-green-700">STG 1</span>
+</div>
+<div class="bg-green-500/10 border-b-4 border-green-500 rounded-t flex items-center justify-center">
+<span class="text-[9px] font-bold text-green-700">STG 2</span>
+</div>
+<div class="bg-orange-500/10 border-b-4 border-orange-400 rounded-t flex items-center justify-center">
+<span class="text-[9px] font-bold text-orange-700">STG 3</span>
+</div>
+<div class="bg-red-500/10 border-b-4 border-red-500 rounded-t flex items-center justify-center relative">
+<div class="absolute -top-1 right-0 w-2 h-2 bg-red-600 rounded-full animate-pulse"></div>
+<span class="text-[9px] font-bold text-red-700">STG 4</span>
+</div>
+<div class="bg-orange-500/10 border-b-4 border-orange-400 rounded-t flex items-center justify-center">
+<span class="text-[9px] font-bold text-orange-700">STG 5</span>
+</div>
+<div class="bg-green-500/10 border-b-4 border-green-500 rounded-t flex items-center justify-center">
+<span class="text-[9px] font-bold text-green-700">STG 6</span>
+</div>
+</div>
+<div class="flex justify-between px-1">
+<span class="text-[10px] text-on-surface-variant">0.8m</span>
+<span class="text-[10px] text-on-surface-variant">1.2m</span>
+<span class="text-[10px] text-on-surface-variant">2.8m</span>
+<span class="text-[10px] font-bold text-red-600">4.2m wait</span>
+<span class="text-[10px] text-on-surface-variant">2.4m</span>
+<span class="text-[10px] text-on-surface-variant">0.5m</span>
+</div>
+</div>
+<div class="mt-6 p-3 bg-red-50 rounded-lg flex items-start gap-3 border-l-2 border-red-500">
+<span class="material-symbols-outlined text-red-600 text-xl" data-icon="emergency_home">emergency_home</span>
+<div>
+<p class="text-xs font-bold text-red-900 leading-tight">PCB Inspection 4.2 min avg wait</p>
+<p class="text-[10px] text-red-700 mt-1">Stage 4 bottleneck detected. Accumulation of 18 units in queue. Recommend visual inspection bypass for low-complexity batches.</p>
+</div>
+</div>
+</div>
+<!-- AI Downtime Tracker -->
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-[0_8px_48px_rgba(9,20,38,0.03)] border border-outline-variant/10">
+<div class="flex justify-between items-center mb-6">
+<div>
+<h2 class="font-headline text-lg font-bold tracking-tight text-primary">AI Downtime Predictor</h2>
+<p class="text-xs text-on-surface-variant">Predictive risk analysis based on sensor telemetry</p>
+</div>
+<div class="flex gap-2">
+<div class="w-2 h-2 rounded-full bg-on-tertiary-container animate-pulse self-center"></div>
+<span class="text-[10px] font-bold text-primary uppercase tracking-tighter">Live Monitor</span>
+</div>
+</div>
+<div class="space-y-5">
+<!-- Tracker Bar 1 -->
+<div class="space-y-2">
+<div class="flex justify-between items-end">
+<label class="text-xs font-bold text-primary">Soldering Machine Calibration</label>
+<span class="text-xs font-bold text-on-tertiary-container">78% Risk</span>
+</div>
+<div class="h-2 w-full bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-on-tertiary-container rounded-full" style="width: 78%"></div>
+</div>
+</div>
+<!-- Tracker Bar 2 -->
+<div class="space-y-2">
+<div class="flex justify-between items-end">
+<label class="text-xs font-bold text-primary">Pick-and-Place Sensor Drift</label>
+<span class="text-xs font-bold text-on-tertiary-container">61% Risk</span>
+</div>
+<div class="h-2 w-full bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-on-tertiary-container opacity-80 rounded-full" style="width: 61%"></div>
+</div>
+</div>
+<!-- Tracker Bar 3 -->
+<div class="space-y-2">
+<div class="flex justify-between items-end">
+<label class="text-xs font-bold text-primary">Reflow Oven Temp Variance</label>
+<span class="text-xs font-bold text-on-tertiary-container">44% Risk</span>
+</div>
+<div class="h-2 w-full bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-on-tertiary-container opacity-50 rounded-full" style="width: 44%"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: AI Recs & KPI Snapshot -->
+<div class="col-span-12 lg:col-span-3 flex flex-col gap-6">
+<!-- AI Recommendations -->
+<div class="flex flex-col gap-4">
+<h2 class="font-headline text-lg font-bold tracking-tight text-primary flex items-center gap-2">
+<span class="material-symbols-outlined text-on-tertiary-container" data-icon="auto_awesome">auto_awesome</span>
+                    AI Recs
+                </h2>
+<!-- Rec Card 1 -->
+<div class="bg-surface-container-lowest p-4 rounded-xl border-l-4 border-on-tertiary-container shadow-[0_4px_24px_rgba(9,20,38,0.02)]">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-on-tertiary-container text-sm" data-icon="person_add">person_add</span>
+<p class="text-xs font-bold text-primary">Reassign Technicians</p>
+</div>
+<p class="text-[11px] text-on-surface-variant mb-4">Reassign 2 technicians from Line 4 to Line 2 to mitigate predicted slowdown.</p>
+<div class="flex gap-2">
+<button class="flex-1 cognitive-gradient text-white text-[10px] font-bold py-1.5 rounded hover:opacity-90 transition-opacity">APPROVE</button>
+<button class="flex-1 bg-surface-container-high text-primary text-[10px] font-bold py-1.5 rounded hover:bg-surface-container-highest transition-colors">OVERRIDE</button>
+</div>
+</div>
+<!-- Rec Card 2 -->
+<div class="bg-surface-container-lowest p-4 rounded-xl border-l-4 border-on-tertiary-container shadow-[0_4px_24px_rgba(9,20,38,0.02)]">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-on-tertiary-container text-sm" data-icon="settings_suggest">settings_suggest</span>
+<p class="text-xs font-bold text-primary">Optimize Flow</p>
+</div>
+<p class="text-[11px] text-on-surface-variant mb-4">Reduce conveyor speed on Line 2 by 15% to sync with Stage 4 inspection bottleneck.</p>
+<div class="flex gap-2">
+<button class="flex-1 cognitive-gradient text-white text-[10px] font-bold py-1.5 rounded">APPROVE</button>
+<button class="flex-1 bg-surface-container-high text-primary text-[10px] font-bold py-1.5 rounded">OVERRIDE</button>
+</div>
+</div>
+<!-- Rec Card 3 -->
+<div class="bg-surface-container-lowest p-4 rounded-xl border-l-4 border-on-tertiary-container shadow-[0_4px_24px_rgba(9,20,38,0.02)]">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-on-tertiary-container text-sm" data-icon="build">build</span>
+<p class="text-xs font-bold text-primary">Preemptive Maint.</p>
+</div>
+<p class="text-[11px] text-on-surface-variant mb-4">Schedule Line 2 nozzle cleaning during the 13:00 break window.</p>
+<div class="flex gap-2">
+<button class="flex-1 cognitive-gradient text-white text-[10px] font-bold py-1.5 rounded">APPROVE</button>
+<button class="flex-1 bg-surface-container-high text-primary text-[10px] font-bold py-1.5 rounded">OVERRIDE</button>
+</div>
+</div>
+</div>
+<!-- KPI Snapshot -->
+<div class="bg-primary p-6 rounded-xl cognitive-gradient shadow-xl text-white">
+<h2 class="font-headline text-sm font-bold tracking-widest uppercase opacity-70 mb-6">KPI Snapshot</h2>
+<div class="space-y-6">
+<!-- OEE -->
+<div class="flex items-center justify-between">
+<div class="relative w-12 h-12 flex items-center justify-center">
+<svg class="w-12 h-12 transform -rotate-90">
+<circle cx="24" cy="24" fill="transparent" r="20" stroke="rgba(255,255,255,0.1)" stroke-width="4"></circle>
+<circle cx="24" cy="24" fill="transparent" r="20" stroke="white" stroke-dasharray="125.6" stroke-dashoffset="23.8" stroke-linecap="round" stroke-width="4"></circle>
+</svg>
+<span class="absolute text-[10px] font-bold">81%</span>
+</div>
+<div class="text-right">
+<p class="text-[10px] opacity-60 uppercase font-bold tracking-tighter">OEE</p>
+<p class="text-xs text-white font-bold flex items-center justify-end gap-1">
+<span class="material-symbols-outlined text-[10px]" data-icon="trending_up">trending_up</span>
+                                +2.4%
+                            </p>
+</div>
+</div>
+<!-- Throughput -->
+<div class="flex items-center justify-between">
+<div class="w-12 h-1 bg-white/20 rounded-full overflow-hidden">
+<div class="h-full bg-green-400" style="width: 94%"></div>
+</div>
+<div class="text-right">
+<p class="text-[10px] opacity-60 uppercase font-bold tracking-tighter">Throughput</p>
+<div class="flex items-center justify-end gap-2">
+<span class="text-xs font-bold">94%</span>
+<span class="text-[10px] text-green-400 font-bold">+1.2%</span>
+</div>
+</div>
+</div>
+<!-- Yield -->
+<div class="flex items-center justify-between">
+<div class="w-12 h-1 bg-white/20 rounded-full overflow-hidden">
+<div class="h-full bg-green-400" style="width: 97.3%"></div>
+</div>
+<div class="text-right">
+<p class="text-[10px] opacity-60 uppercase font-bold tracking-tighter">Yield Rate</p>
+<div class="flex items-center justify-end gap-2">
+<span class="text-xs font-bold">97.3%</span>
+<span class="text-[10px] text-green-400 font-bold">+0.8%</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- SideNavBar (Trigger Overlay Style) -->
+<aside class="fixed left-0 top-0 h-full flex flex-col pt-20 w-14 hover:w-64 bg-slate-50/80 dark:bg-slate-900/80 backdrop-blur-md border-r border-slate-200/15 dark:border-slate-700/15 group transition-all duration-300 z-40 overflow-hidden">
+<div class="flex flex-col gap-2 px-3">
+<div class="flex items-center gap-4 p-2 rounded-lg bg-slate-200/50 dark:bg-slate-800/50 text-slate-900 dark:text-white border-l-4 border-orange-700">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="text-sm font-semibold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">Inventory</span>
+</div>
+<div class="flex items-center gap-4 p-2 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/30 hover:translate-x-1 transition-all">
+<span class="material-symbols-outlined" data-icon="handshake">handshake</span>
+<span class="text-sm font-semibold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">Suppliers</span>
+</div>
+<div class="flex items-center gap-4 p-2 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/30 hover:translate-x-1 transition-all">
+<span class="material-symbols-outlined" data-icon="local_shipping">local_shipping</span>
+<span class="text-sm font-semibold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">Shipments</span>
+</div>
+<div class="flex items-center gap-4 p-2 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/30 hover:translate-x-1 transition-all">
+<span class="material-symbols-outlined" data-icon="warehouse">warehouse</span>
+<span class="text-sm font-semibold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">Warehousing</span>
+</div>
+<div class="flex items-center gap-4 p-2 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/30 hover:translate-x-1 transition-all">
+<span class="material-symbols-outlined" data-icon="assessment">assessment</span>
+<span class="text-sm font-semibold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">Reports</span>
+</div>
+</div>
+<div class="mt-auto flex flex-col gap-2 px-3 pb-6">
+<div class="flex items-center gap-4 p-2 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/30 hover:translate-x-1 transition-all">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="text-sm font-semibold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">Settings</span>
+</div>
+<div class="flex items-center gap-4 p-2 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/30 hover:translate-x-1 transition-all">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+<span class="text-sm font-semibold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">Support</span>
+</div>
+</div>
+</aside>
+</body></html>

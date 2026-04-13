@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>OperatioAI - Supervisor Chat</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<!-- Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-tint": "#545f73",
+                        "error-container": "#ffdad6",
+                        "surface-container-low": "#f3f4f6",
+                        "on-primary-container": "#8590a6",
+                        "secondary-container": "#d5e3fd",
+                        "on-background": "#191c1e",
+                        "inverse-surface": "#2e3132",
+                        "on-error-container": "#93000a",
+                        "tertiary-fixed": "#ffdbca",
+                        "on-tertiary-fixed-variant": "#783200",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-fixed-dim": "#ffb690",
+                        "on-primary-fixed": "#111c2d",
+                        "on-error": "#ffffff",
+                        "on-surface-variant": "#45474c",
+                        "on-tertiary-fixed": "#341100",
+                        "on-secondary-fixed-variant": "#3a485c",
+                        "surface-bright": "#f8f9fb",
+                        "surface-variant": "#e1e2e4",
+                        "outline-variant": "#c5c6cd",
+                        "tertiary-container": "#481b00",
+                        "secondary": "#515f74",
+                        "primary-fixed-dim": "#bcc7de",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary-container": "#eb6905",
+                        "secondary-fixed-dim": "#b9c7e0",
+                        "primary-container": "#1e293b",
+                        "background": "#f8f9fb",
+                        "surface-container": "#edeef0",
+                        "primary-fixed": "#d8e3fb",
+                        "on-primary-fixed-variant": "#3c475a",
+                        "primary": "#091426",
+                        "on-secondary-container": "#57657b",
+                        "inverse-on-surface": "#f0f1f3",
+                        "surface-container-highest": "#e1e2e4",
+                        "on-surface": "#191c1e",
+                        "surface": "#f8f9fb",
+                        "surface-dim": "#d9dadc",
+                        "on-secondary-fixed": "#0d1c2f",
+                        "outline": "#75777d",
+                        "on-tertiary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "surface-container-high": "#e7e8ea",
+                        "on-primary": "#ffffff",
+                        "secondary-fixed": "#d5e3fd",
+                        "inverse-primary": "#bcc7de",
+                        "tertiary": "#280c00"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    fontFamily: {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        .font-headline { font-family: 'Space Grotesk', sans-serif; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface flex flex-col min-h-screen max-w-[375px] mx-auto overflow-hidden relative shadow-2xl">
+<!-- Status Bar (iOS Style) -->
+<div class="flex justify-between items-center px-6 pt-3 pb-2 text-[13px] font-semibold bg-surface-container-low/80 backdrop-blur-md">
+<div class="flex items-center gap-1">9:41</div>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">signal_cellular_alt</span>
+<span class="material-symbols-outlined text-[16px]">wifi</span>
+<span class="material-symbols-outlined text-[16px]">battery_full</span>
+</div>
+</div>
+<!-- App Header -->
+<header class="bg-slate-50/70 dark:bg-slate-900/70 backdrop-blur-xl flex justify-between items-center w-full px-5 py-3 docked full-width top-0 z-50 tonal architecture using bg-slate-100 dark:bg-slate-800">
+<div class="flex items-center gap-2 text-xl font-bold text-slate-900 dark:text-slate-50">
+<div class="bg-tertiary-container p-1 rounded-lg">
+<span class="material-symbols-outlined text-on-tertiary-container" style="font-variation-settings: 'FILL' 1;">psychology</span>
+</div>
+<span class="font-headline font-bold tracking-tight">OperatioAI</span>
+<div class="flex items-center gap-1 ml-1 bg-surface-container-high px-2 py-0.5 rounded-full">
+<div class="w-2 h-2 bg-green-500 rounded-full"></div>
+<span class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">Live</span>
+</div>
+</div>
+<button class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-outline">settings</span>
+</button>
+</header>
+<!-- Chat Interface -->
+<main class="flex-1 overflow-y-auto px-4 py-6 space-y-6 bg-surface">
+<!-- AI Message 1 -->
+<div class="flex flex-col gap-1.5 max-w-[85%]">
+<div class="flex items-center gap-2 mb-1 px-1">
+<span class="text-[11px] font-bold text-on-surface-variant tracking-wider uppercase">OperatioAI System</span>
+</div>
+<div class="bg-surface-container-high text-on-surface px-4 py-3 rounded-2xl rounded-tl-none shadow-sm border-l-4 border-tertiary-container">
+<p class="text-sm leading-relaxed">
+<span class="material-symbols-outlined text-error text-lg align-text-bottom mr-1">warning</span> 
+                    Worker Fatigue Alert — Assembly Station 5. Ravi Kumar has logged 3 errors in the last 30 min. 
+                    <span class="block mt-2 font-semibold">Recommended: Reassign to Testing Bench.</span>
+</p>
+</div>
+<span class="text-[10px] text-outline ml-1">10:02 AM</span>
+</div>
+<!-- Supervisor Reply -->
+<div class="flex flex-col gap-1.5 max-w-[85%] self-end items-end ml-auto">
+<div class="bg-primary px-4 py-3 rounded-2xl rounded-tr-none shadow-md">
+<p class="text-sm text-white font-medium">Got it. Reassign confirmed.</p>
+</div>
+<span class="text-[10px] text-outline mr-1">10:03 AM</span>
+</div>
+<!-- AI Message 2 -->
+<div class="flex flex-col gap-1.5 max-w-[85%]">
+<div class="bg-surface-container-high text-on-surface px-4 py-3 rounded-2xl rounded-tl-none shadow-sm">
+<p class="text-sm leading-relaxed">
+<span class="material-symbols-outlined text-on-tertiary-container text-lg align-text-bottom mr-1" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                    Done. Production schedule updated. Station 5 now assigned to Priya Singh.
+                </p>
+</div>
+<span class="text-[10px] text-outline ml-1">10:03 AM</span>
+</div>
+<!-- AI Message 3 -->
+<div class="flex flex-col gap-1.5 max-w-[85%]">
+<div class="bg-surface-container-high text-on-surface px-4 py-3 rounded-2xl rounded-tl-none shadow-sm border-l-4 border-on-tertiary-container">
+<p class="text-sm leading-relaxed">
+<span class="material-symbols-outlined text-on-tertiary-container text-lg align-text-bottom mr-1">build</span>
+                    Machine M-07 showing vibration spike. Suggest requesting maintenance.
+                </p>
+</div>
+<span class="text-[10px] text-outline ml-1">10:05 AM</span>
+</div>
+</main>
+<!-- Quick Actions Bar -->
+<div class="bg-surface-container-low px-4 pt-4 pb-2">
+<div class="grid grid-cols-2 gap-3">
+<button class="bg-surface-container-lowest p-3 rounded-xl flex items-center gap-3 shadow-[0_4px_12px_rgba(9,20,38,0.06)] hover:bg-surface-bright transition-all active:scale-95 group">
+<div class="bg-primary-fixed p-2 rounded-lg group-hover:bg-primary-fixed-dim transition-colors">
+<span class="material-symbols-outlined text-on-primary-fixed text-lg">person_add</span>
+</div>
+<span class="text-xs font-bold text-on-surface tracking-tight">Reassign Worker</span>
+</button>
+<button class="bg-surface-container-lowest p-3 rounded-xl flex items-center gap-3 shadow-[0_4px_12px_rgba(9,20,38,0.06)] hover:bg-surface-bright transition-all active:scale-95 group">
+<div class="bg-primary-fixed p-2 rounded-lg group-hover:bg-primary-fixed-dim transition-colors">
+<span class="material-symbols-outlined text-on-primary-fixed text-lg">photo_camera</span>
+</div>
+<span class="text-xs font-bold text-on-surface tracking-tight">Log Defect</span>
+</button>
+<button class="bg-surface-container-lowest p-3 rounded-xl flex items-center gap-3 shadow-[0_4px_12px_rgba(9,20,38,0.06)] hover:bg-surface-bright transition-all active:scale-95 group">
+<div class="bg-tertiary-fixed p-2 rounded-lg group-hover:bg-tertiary-fixed-dim transition-colors">
+<span class="material-symbols-outlined text-on-tertiary-fixed text-lg">engineering</span>
+</div>
+<span class="text-xs font-bold text-on-surface tracking-tight">Request Maintenance</span>
+</button>
+<button class="bg-surface-container-lowest p-3 rounded-xl flex items-center gap-3 shadow-[0_4px_12px_rgba(9,20,38,0.06)] hover:bg-surface-bright transition-all active:scale-95 group">
+<div class="bg-tertiary-fixed p-2 rounded-lg group-hover:bg-tertiary-fixed-dim transition-colors">
+<span class="material-symbols-outlined text-on-tertiary-fixed text-lg">verified</span>
+</div>
+<span class="text-xs font-bold text-on-surface tracking-tight">Approve Overtime</span>
+</button>
+</div>
+</div>
+<!-- Input Bar -->
+<footer class="bg-surface-container-low px-4 pb-8 pt-2">
+<div class="flex items-center gap-2 bg-surface-container-lowest rounded-full px-4 py-2.5 shadow-[0_2px_8px_rgba(0,0,0,0.05)]">
+<span class="material-symbols-outlined text-outline">mic</span>
+<input class="flex-1 bg-transparent border-none focus:ring-0 text-sm placeholder:text-outline p-0" placeholder="Ask OperatioAI…" type="text"/>
+<button class="bg-primary text-white p-1.5 rounded-full flex items-center justify-center hover:bg-primary-container transition-colors">
+<span class="material-symbols-outlined text-[18px]">arrow_upward</span>
+</button>
+</div>
+</footer>
+<!-- Home Indicator -->
+<div class="absolute bottom-1.5 left-1/2 -translate-x-1/2 w-32 h-1.5 bg-on-surface/10 rounded-full"></div>
+</body></html>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DroneOpsAI - Shift Planner</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Space_Grotesk:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-tint": "#545f73",
+                    "error-container": "#ffdad6",
+                    "surface-container-low": "#f3f4f6",
+                    "on-primary-container": "#8590a6",
+                    "secondary-container": "#d5e3fd",
+                    "on-background": "#191c1e",
+                    "inverse-surface": "#2e3132",
+                    "on-error-container": "#93000a",
+                    "tertiary-fixed": "#ffdbca",
+                    "on-tertiary-fixed-variant": "#783200",
+                    "surface-container-lowest": "#ffffff",
+                    "tertiary-fixed-dim": "#ffb690",
+                    "on-primary-fixed": "#111c2d",
+                    "on-error": "#ffffff",
+                    "on-surface-variant": "#45474c",
+                    "on-tertiary-fixed": "#341100",
+                    "on-secondary-fixed-variant": "#3a485c",
+                    "surface-bright": "#f8f9fb",
+                    "surface-variant": "#e1e2e4",
+                    "outline-variant": "#c5c6cd",
+                    "tertiary-container": "#481b00",
+                    "secondary": "#515f74",
+                    "primary-fixed-dim": "#bcc7de",
+                    "on-secondary": "#ffffff",
+                    "on-tertiary-container": "#eb6905",
+                    "secondary-fixed-dim": "#b9c7e0",
+                    "primary-container": "#1e293b",
+                    "background": "#f8f9fb",
+                    "surface-container": "#edeef0",
+                    "primary-fixed": "#d8e3fb",
+                    "on-primary-fixed-variant": "#3c475a",
+                    "primary": "#091426",
+                    "on-secondary-container": "#57657b",
+                    "inverse-on-surface": "#f0f1f3",
+                    "surface-container-highest": "#e1e2e4",
+                    "on-surface": "#191c1e",
+                    "surface": "#f8f9fb",
+                    "surface-dim": "#d9dadc",
+                    "on-secondary-fixed": "#0d1c2f",
+                    "outline": "#75777d",
+                    "on-tertiary": "#ffffff",
+                    "error": "#ba1a1a",
+                    "surface-container-high": "#e7e8ea",
+                    "on-primary": "#ffffff",
+                    "secondary-fixed": "#d5e3fd",
+                    "inverse-primary": "#bcc7de",
+                    "tertiary": "#280c00"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Space Grotesk"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .cognitive-gradient {
+        background: linear-gradient(135deg, #091426 0%, #1e293b 100%);
+      }
+      .glass-nav {
+        backdrop-filter: blur(12px);
+      }
+      .ambient-occlusion {
+        box-shadow: 0 8px 32px rgba(9, 20, 38, 0.06);
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface font-body text-on-surface min-h-screen max-w-[375px] mx-auto overflow-x-hidden">
+<!-- Top Navigation Bar (Shared Component: TopNavBar) -->
+<header class="bg-slate-50/70 dark:bg-slate-900/70 backdrop-blur-xl docked full-width top-0 z-50 flex justify-between items-center w-full px-6 py-3 max-w-full">
+<div class="flex items-center gap-2 text-xl font-bold text-slate-900 dark:text-slate-50 font-['Space_Grotesk']">
+<span class="material-symbols-outlined text-on-tertiary-container" data-icon="psychology">psychology</span>
+<span>DroneOpsAI</span>
+<div class="w-2 h-2 rounded-full bg-on-tertiary-container animate-pulse"></div>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-slate-900 dark:text-slate-50" data-icon="notifications">notifications</span>
+<div class="w-8 h-8 rounded-full bg-surface-container-highest overflow-hidden border border-outline-variant/20">
+<img alt="User profile with active status" class="w-full h-full object-cover" data-alt="professional portrait of a manufacturing supervisor in a smart facility" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCWbvpqL0zSnviUNhUZ_iVm-jI2bCCEBKO_TAyEI4bj7ER_hpuaLLoWCu0jtt7o6U7QSvAwsetWvjPX9hl_RBPXJWTRnpNbIdn0jGw5iDohgl1NHcCI1QcveiiwBVzzqLQUU3nHYR3KfyBbq_fJv3hcubP9wAGFUqx3cmyaPtbg01Q35OYkQlz9U6jPME_IDFX2gfVKuwZtEn5-Bp-q27nrDTnoWcMYzeo-I_U-S5vgxGp1tGck61IBzA1haGl2WkMpEHHKnMHd2M8"/>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="pt-4 pb-24 px-4 space-y-6">
+<!-- Toggle Tabs -->
+<nav class="flex p-1 bg-surface-container-low rounded-xl">
+<button class="flex-1 py-2 text-xs font-semibold text-on-surface-variant transition-colors">AI Chat</button>
+<button class="flex-1 py-2 text-xs font-bold text-slate-900 dark:text-white border-b-2 border-orange-600 pb-1">Shift Planner</button>
+<button class="flex-1 py-2 text-xs font-semibold text-on-surface-variant transition-colors">Defect Log</button>
+</nav>
+<!-- Summary Bar (Tonal Architecture) -->
+<section class="bg-surface-container-low rounded-xl p-4 space-y-2 ambient-occlusion">
+<div class="flex justify-between items-center">
+<h2 class="font-headline text-lg font-bold text-primary">Shift 2</h2>
+<span class="text-[10px] font-bold uppercase tracking-wider text-on-surface-variant bg-surface-container-highest px-2 py-0.5 rounded">14:00–22:00</span>
+</div>
+<div class="flex gap-4 items-center">
+<div class="flex flex-col">
+<span class="text-[10px] text-on-surface-variant font-medium">Workers</span>
+<span class="font-headline text-xl font-bold text-primary">18</span>
+</div>
+<div class="h-8 w-px bg-outline-variant/30"></div>
+<div class="flex flex-col">
+<span class="text-[10px] text-on-surface-variant font-medium">AI Optimizations</span>
+<div class="flex items-center gap-1">
+<span class="font-headline text-xl font-bold text-on-tertiary-container">4</span>
+<span class="text-[10px] font-bold text-on-tertiary-container italic">applied</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Task List -->
+<div class="space-y-4">
+<!-- Card 1: AI Suggested Highlight -->
+<article class="bg-surface-container-lowest rounded-xl p-4 relative border-2 border-on-tertiary-container/30 ambient-occlusion">
+<div class="absolute -top-3 left-4 bg-on-tertiary-container text-white text-[10px] font-bold px-3 py-1 rounded-full flex items-center gap-1 shadow-md">
+<span class="material-symbols-outlined text-[12px]" data-icon="bolt" data-weight="fill" style="font-variation-settings: 'FILL' 1;">bolt</span>
+                    AI SUGGESTION
+                </div>
+<div class="flex gap-4 items-start pt-2">
+<img alt="Worker profile" class="w-12 h-12 rounded-lg object-cover" data-alt="close up headshot of a south asian man in industrial uniform" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC6gwVpF9S3X2O3jZHzJLJ7R26xQhYf_wwwO0uBAxtwzR7unbVouHo9H9TvchR5hM0xuv8UPvf0DbgKj6pIMs9vFoWQvXyRkGP9GYAz4_IGydC4NTv2uDqgH8wYx6e6vHbxKTyabykLZmJsquVB21xjcOUcrqhcyayJGge_ump6XkRkIGDzY4b2NhQ1AjJJuEirO5TqsQbLePSmsrlNUE50YqPXufxampVHgx5OcwvO5kZOJp2UaChnpEdd9N0G7PGSpEyqk4raV_M"/>
+<div class="flex-1 space-y-1">
+<div class="flex justify-between items-start">
+<h3 class="font-bold text-primary">Ankit Sharma</h3>
+<span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container">Active</span>
+</div>
+<div class="space-y-1">
+<p class="text-xs text-on-surface-variant">Station: <span class="font-semibold">PCB Loading</span></p>
+<p class="text-xs text-on-tertiary-container italic font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="trending_flat">trending_flat</span>
+                                Quality Inspection
+                            </p>
+</div>
+</div>
+</div>
+<div class="mt-4 p-3 bg-tertiary-fixed/30 rounded-lg flex items-start gap-2">
+<span class="material-symbols-outlined text-on-tertiary-fixed-variant text-[18px]" data-icon="warning">warning</span>
+<p class="text-[11px] text-on-tertiary-fixed-variant leading-tight">
+<span class="font-bold">Fatigue indicator high:</span> Biometric data suggests a break or rotation to a less intensive station.
+                    </p>
+</div>
+<button class="mt-4 w-full py-2.5 cognitive-gradient text-white text-xs font-bold rounded-lg flex items-center justify-center gap-2">
+                    Approve Rotation
+                </button>
+</article>
+<!-- Card 2 -->
+<article class="bg-surface-container-lowest rounded-xl p-4 ambient-occlusion border-l-4 border-tertiary-container">
+<div class="flex gap-4 items-start">
+<img alt="Worker profile" class="w-12 h-12 rounded-lg object-cover grayscale opacity-80" data-alt="portrait of a female manufacturing engineer with focused expression" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvBEJNjXCHr00hGn_JepHEFVEf8et0beR6uN0IfOvJx9MEC7-QpizTpTqsfdCt_jHLqA-dTEua0yVCaphAeSHuZtminGnmXqyO5QktDKDyEgb2qZ-ofNPxblW0g_AuLS5UI4lCbHyzxpUiE07zgFwJ6rQ05Ud7OMvp_k08RTqVxDNj6Hutk0w5CKuaeuFfQ82Ed-1I-wUsl6X1yMVFdUjB0VK04kis0RLR58BXa2slIORT3T8RJBPiPWOxxCM111Yr6QzbEvGyl2k"/>
+<div class="flex-1 space-y-1">
+<div class="flex justify-between items-start">
+<h3 class="font-bold text-primary">Priya Das</h3>
+<span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed-variant">Reassigned</span>
+</div>
+<p class="text-xs text-on-surface-variant">Station: <span class="font-semibold text-primary">Final Assembly</span></p>
+<p class="text-[10px] text-on-surface-variant/60 font-medium italic">Moved from Quality Inspection (Shift Start)</p>
+</div>
+</div>
+</article>
+<!-- Card 3 -->
+<article class="bg-surface-container-lowest rounded-xl p-4 ambient-occlusion">
+<div class="flex gap-4 items-start">
+<img alt="Worker profile" class="w-12 h-12 rounded-lg object-cover" data-alt="professional photo of a manufacturing technician" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCjUDZ3nTbgh_p8o9bdGomY7PuSo5WA8kmDSVypxOiu90klFU9ano8qjz9LMKcbLPf7HGoqQox2XEawNuX9qqsaDoMbCuuiOecHTMZzxbb8vNMuVN8JbCPaHOKXBuGB6yuNDbrhXa6mKgwOgMmqDhjn5zIi8XSA1N24yQkDPQkE-b0nvYvxzUzxe5_GZf-VL6wbQTjVbqtqo-8CGjXEEkOOT0KBCNC37LMC93ykXZu8kAUujhm-JtyM67l4R9-LDeYSRVLDOhcRZw"/>
+<div class="flex-1 space-y-1">
+<div class="flex justify-between items-start">
+<h3 class="font-bold text-primary">Rahul Mehta</h3>
+<span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-surface-variant text-on-surface-variant">Break</span>
+</div>
+<p class="text-xs text-on-surface-variant">Station: <span class="font-semibold text-primary">Motor Mounting</span></p>
+<p class="text-[10px] text-on-tertiary-container italic font-medium">Rotation Suggestion: Power Systems (16:30)</p>
+</div>
+</div>
+</article>
+<!-- Card 4 -->
+<article class="bg-surface-container-lowest rounded-xl p-4 ambient-occlusion">
+<div class="flex gap-4 items-start">
+<img alt="Worker profile" class="w-12 h-12 rounded-lg object-cover" data-alt="portrait of an industrial worker in high-tech drone plant" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDD6rlLndFtoZMdIjAGtF87HNEM0kNk8sTz_4SBuzmfm1qF1casjcZxOsbBVnl25um0MqoejFI9DF2mT2e9AA2mKbNVkioa3x-EpuDvoR9Wk72JzchPQ4aXbPVinKakkVlE-mFI8LhRr6xZg1Td2_qy_R8u206dBUof66g2vbiHSIv0uMCPR2bb8xKMywc-z-bs4Zd-K9aMfINj8yxB351gwL2TjJuoeK3co7A7S-7Y2ky9eqFQteO92MHoo3i9Z-ovPba9u7qUAzo"/>
+<div class="flex-1 space-y-1">
+<div class="flex justify-between items-start">
+<h3 class="font-bold text-primary">Vikram Singh</h3>
+<span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container">Active</span>
+</div>
+<p class="text-xs text-on-surface-variant">Station: <span class="font-semibold text-primary">Firmware Flash</span></p>
+</div>
+</div>
+</article>
+<!-- Card 5 -->
+<article class="bg-surface-container-lowest rounded-xl p-4 ambient-occlusion">
+<div class="flex gap-4 items-start">
+<img alt="Worker profile" class="w-12 h-12 rounded-lg object-cover" data-alt="skilled worker portrait in drone manufacturing facility" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDSkmSkqW6LZFFomry9tyCyzCKuRYVgi6aMMO0Ud3eWDdsb_H_mXR7gi46LDDLjfROASzw8EzlaiXcA-lVjieZ8SL-izB5k84RYykS00yOo4SkXOQCnOCaYGxGCA53Q5iMyxR0sWhOq5cOBoG_4Krcu6yGy_g_-Vrn25Wt-rZnYbIzgokZ5CLi0EwEir9RbT8eKjmGs1EAxWcIMC0ou79xNhWphwZInrVyWAO5N9ro-C81ZhEWDpKu2Gn8b81T4MUJHfi45w49WoA4"/>
+<div class="flex-1 space-y-1">
+<div class="flex justify-between items-start">
+<h3 class="font-bold text-primary">Sanya Malhotra</h3>
+<span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container">Active</span>
+</div>
+<p class="text-xs text-on-surface-variant">Station: <span class="font-semibold text-primary">Payload Calibration</span></p>
+</div>
+</div>
+</article>
+</div>
+</main>
+<!-- Floating Action Button (FAB) -->
+<div class="fixed bottom-6 left-0 right-0 px-4 z-40">
+<button class="w-full h-14 rounded-full bg-on-tertiary-container text-white font-bold text-sm shadow-xl flex items-center justify-center gap-3 ambient-occlusion border-4 border-white/10 backdrop-blur-sm">
+<span class="material-symbols-outlined" data-icon="calendar_month">calendar_month</span>
+            View Full Production Schedule
+        </button>
+</div>
+<!-- Bottom Navigation Bar (Contextually hidden for focus, but using a minimal indicator/shell for the Supervisor) -->
+<nav class="fixed bottom-0 left-0 right-0 h-1 bg-surface-container-highest opacity-20"></nav>
+</body></html>

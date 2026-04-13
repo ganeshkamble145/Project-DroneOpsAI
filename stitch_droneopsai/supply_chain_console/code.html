@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DroneOpsAI - Vendor &amp; Inventory Console</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-tint": "#545f73",
+                        "error-container": "#ffdad6",
+                        "surface-container-low": "#f3f4f6",
+                        "on-primary-container": "#8590a6",
+                        "secondary-container": "#d5e3fd",
+                        "on-background": "#191c1e",
+                        "inverse-surface": "#2e3132",
+                        "on-error-container": "#93000a",
+                        "tertiary-fixed": "#ffdbca",
+                        "on-tertiary-fixed-variant": "#783200",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-fixed-dim": "#ffb690",
+                        "on-primary-fixed": "#111c2d",
+                        "on-error": "#ffffff",
+                        "on-surface-variant": "#45474c",
+                        "on-tertiary-fixed": "#341100",
+                        "on-secondary-fixed-variant": "#3a485c",
+                        "surface-bright": "#f8f9fb",
+                        "surface-variant": "#e1e2e4",
+                        "outline-variant": "#c5c6cd",
+                        "tertiary-container": "#481b00",
+                        "secondary": "#515f74",
+                        "primary-fixed-dim": "#bcc7de",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary-container": "#eb6905",
+                        "secondary-fixed-dim": "#b9c7e0",
+                        "primary-container": "#1e293b",
+                        "background": "#f8f9fb",
+                        "surface-container": "#edeef0",
+                        "primary-fixed": "#d8e3fb",
+                        "on-primary-fixed-variant": "#3c475a",
+                        "primary": "#091426",
+                        "on-secondary-container": "#57657b",
+                        "inverse-on-surface": "#f0f1f3",
+                        "surface-container-highest": "#e1e2e4",
+                        "on-surface": "#191c1e",
+                        "surface": "#f8f9fb",
+                        "surface-dim": "#d9dadc",
+                        "on-secondary-fixed": "#0d1c2f",
+                        "outline": "#75777d",
+                        "on-tertiary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "surface-container-high": "#e7e8ea",
+                        "on-primary": "#ffffff",
+                        "secondary-fixed": "#d5e3fd",
+                        "inverse-primary": "#bcc7de",
+                        "tertiary": "#280c00"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .cognitive-gradient {
+            background: linear-gradient(135deg, #091426 0%, #1e293b 100%);
+        }
+        .glass-header {
+            background: rgba(248, 249, 251, 0.7);
+            backdrop-filter: blur(20px);
+        }
+    </style>
+</head>
+<body class="bg-background font-body text-on-surface min-h-screen">
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 z-50 w-full glass-header px-6 py-3 flex justify-between items-center bg-slate-50/70 dark:bg-slate-900/70 backdrop-blur-xl">
+<div class="flex items-center gap-2 text-xl font-bold text-slate-900 dark:text-slate-50 font-headline">
+<span class="material-symbols-outlined text-on-tertiary-container" data-icon="rocket_launch">rocket_launch</span>
+            DroneOpsAI
+        </div>
+<nav class="hidden md:flex items-center gap-8 font-['Space_Grotesk'] text-sm font-medium tracking-tight">
+<a class="text-slate-500 dark:text-slate-400 pb-1 hover:text-orange-500 transition-colors duration-200" href="#">Plants</a>
+<a class="text-slate-900 dark:text-white border-b-2 border-orange-600 pb-1" href="#">Vendors</a>
+<a class="text-slate-500 dark:text-slate-400 pb-1 hover:text-orange-500 transition-colors duration-200" href="#">Inventory</a>
+<a class="text-slate-500 dark:text-slate-400 pb-1 hover:text-orange-500 transition-colors duration-200" href="#">Procurement</a>
+<a class="text-slate-500 dark:text-slate-400 pb-1 hover:text-orange-500 transition-colors duration-200" href="#">Reports</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<div class="w-8 h-8 rounded-full overflow-hidden bg-surface-container-highest">
+<img alt="User profile" data-alt="professional headshot of a supply chain executive in a clean office environment with natural lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAjufajdXBacA1wRUhFXIAcGupHvP9jzVUMsPcqNMtZH3vh0Lj7qrq7wVWLliptueAFV-ZbSRkhRohIubQZN6SFluDFlTLZ0Yu6kgrO9Y8azX1l4GQTMgSLwCLm2ti-lIwY2U8NKZ8Z2LHv92VwgxCHjnzBEn1tmwqLYm0PISeb-MZVgZc4IM_f7-W04o9Rt8ZfJjp-0fNMTniznjKB450FAiQF167dgDIZoPWiv-BXsiX0ZKW-hz4KgVCp9d9TIMKzjwHCJL2ZCpg"/>
+</div>
+</div>
+</header>
+<main class="pt-20 px-8 pb-12 max-w-[1440px] mx-auto flex gap-8">
+<!-- Left Content (60%) -->
+<section class="w-[60%] space-y-6">
+<!-- AI Risk Alert Banner -->
+<div class="bg-tertiary-container rounded-xl p-5 border-l-4 border-on-tertiary-container flex items-center justify-between shadow-sm">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-on-tertiary-container/10 flex items-center justify-center text-on-tertiary-container">
+<span class="material-symbols-outlined" data-icon="smart_toy" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+</div>
+<div>
+<h3 class="text-on-tertiary-container font-semibold flex items-center gap-2">
+                            AI Risk: Vendor ElectroPro MCU-2024 delivery delayed.
+                        </h3>
+<p class="text-on-tertiary-container/80 text-sm">
+                            Recommend switching to Alternate Vendor B. Estimated cost delta: <span class="font-bold">+₹8,400</span>.
+                        </p>
+</div>
+</div>
+<button class="bg-on-tertiary-container text-white px-4 py-2 rounded-lg font-semibold text-sm hover:opacity-90 transition-opacity">
+                    Run Cost Simulation
+                </button>
+</div>
+<!-- Vendor Grid Header -->
+<div class="flex justify-between items-end mb-2">
+<h2 class="font-headline text-2xl font-bold text-primary">Active Vendors</h2>
+<div class="flex gap-2">
+<span class="text-xs font-label uppercase tracking-widest text-on-surface-variant">Filter by Health:</span>
+<div class="flex gap-1">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+<span class="w-2 h-2 rounded-full bg-amber-500"></span>
+<span class="w-2 h-2 rounded-full bg-red-500"></span>
+</div>
+</div>
+</div>
+<!-- Vendor Cards Grid -->
+<div class="grid grid-cols-2 gap-4">
+<!-- Card 1: ElectroPro (Critical) -->
+<div class="bg-surface-container-lowest rounded-xl p-5 shadow-sm relative overflow-hidden group border-l-4 border-on-tertiary-container">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h4 class="font-bold text-lg text-primary">ElectroPro</h4>
+<p class="text-xs text-on-surface-variant font-label">Integrated Circuits &amp; MCUs</p>
+</div>
+<span class="bg-red-100 text-red-700 px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider">Critical</span>
+</div>
+<div class="bg-red-50 border border-red-100 rounded-lg p-3 mb-4 flex items-start gap-3">
+<span class="material-symbols-outlined text-red-600 text-lg" data-icon="warning">warning</span>
+<p class="text-xs text-red-800 font-medium leading-relaxed">Predicted 5-day delay on MCU shipment.</p>
+</div>
+<div class="flex flex-wrap gap-2">
+<div class="bg-surface-container-low px-3 py-1.5 rounded-full flex items-center gap-2">
+<span class="text-[10px] text-on-surface-variant font-medium">On-Time</span>
+<span class="text-xs font-bold text-red-600">72%</span>
+</div>
+<div class="bg-surface-container-low px-3 py-1.5 rounded-full flex items-center gap-2">
+<span class="text-[10px] text-on-surface-variant font-medium">Defect</span>
+<span class="text-xs font-bold">1.2%</span>
+</div>
+<div class="bg-surface-container-low px-3 py-1.5 rounded-full flex items-center gap-2">
+<span class="text-[10px] text-on-surface-variant font-medium">Lead</span>
+<span class="text-xs font-bold">11d</span>
+</div>
+</div>
+</div>
+<!-- Card 2: TechParts India -->
+<div class="bg-surface-container-lowest rounded-xl p-5 shadow-sm relative overflow-hidden group">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h4 class="font-bold text-lg text-primary">TechParts India</h4>
+<p class="text-xs text-on-surface-variant font-label">Mechanical Assemblies</p>
+</div>
+<span class="bg-emerald-100 text-emerald-700 px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider">Healthy</span>
+</div>
+<div class="h-[60px] flex items-center text-on-surface-variant/40 italic text-xs">No active alerts for this vendor.</div>
+<div class="flex flex-wrap gap-2">
+<div class="bg-surface-container-low px-3 py-1.5 rounded-full flex items-center gap-2">
+<span class="text-[10px] text-on-surface-variant font-medium">On-Time</span>
+<span class="text-xs font-bold text-emerald-600">89%</span>
+</div>
+<div class="bg-surface-container-low px-3 py-1.5 rounded-full flex items-center gap-2">
+<span class="text-[10px] text-on-surface-variant font-medium">Defect</span>
+<span class="text-xs font-bold">0.8%</span>
+</div>
+<div class="bg-surface-container-low px-3 py-1.5 rounded-full flex items-center gap-2">
+<span class="text-[10px] text-on-surface-variant font-medium">Lead</span>
+<span class="text-xs font-bold">6d</span>
+</div>
+</div>
+</div>
+<!-- Card 3: SensorWorld -->
+<div class="bg-surface-container-lowest rounded-xl p-5 shadow-sm relative overflow-hidden group">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h4 class="font-bold text-lg text-primary">SensorWorld</h4>
+<p class="text-xs text-on-surface-variant font-label">Precision Avionics</p>
+</div>
+<span class="bg-amber-100 text-amber-700 px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider">Observation</span>
+</div>
+<div class="h-[60px] flex items-center text-on-surface-variant/40 italic text-xs">Slight increase in defect rate detected.</div>
+<div class="flex flex-wrap gap-2">
+<div class="bg-surface-container-low px-3 py-1.5 rounded-full flex items-center gap-2">
+<span class="text-[10px] text-on-surface-variant font-medium">On-Time</span>
+<span class="text-xs font-bold">84%</span>
+</div>
+<div class="bg-surface-container-low px-3 py-1.5 rounded-full flex items-center gap-2">
+<span class="text-[10px] text-on-surface-variant font-medium">Defect</span>
+<span class="text-xs font-bold text-amber-600">2.1%</span>
+</div>
+<div class="bg-surface-container-low px-3 py-1.5 rounded-full flex items-center gap-2">
+<span class="text-[10px] text-on-surface-variant font-medium">Lead</span>
+<span class="text-xs font-bold">9d</span>
+</div>
+</div>
+</div>
+<!-- Card 4: SkyDynamics -->
+<div class="bg-surface-container-lowest rounded-xl p-5 shadow-sm relative overflow-hidden group">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h4 class="font-bold text-lg text-primary">SkyDynamics</h4>
+<p class="text-xs text-on-surface-variant font-label">Propulsion Systems</p>
+</div>
+<span class="bg-emerald-100 text-emerald-700 px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider">Healthy</span>
+</div>
+<div class="h-[60px] flex items-center text-on-surface-variant/40 italic text-xs">Delivery performance exceeding baseline.</div>
+<div class="flex flex-wrap gap-2">
+<div class="bg-surface-container-low px-3 py-1.5 rounded-full flex items-center gap-2">
+<span class="text-[10px] text-on-surface-variant font-medium">On-Time</span>
+<span class="text-xs font-bold text-emerald-600">96%</span>
+</div>
+<div class="bg-surface-container-low px-3 py-1.5 rounded-full flex items-center gap-2">
+<span class="text-[10px] text-on-surface-variant font-medium">Defect</span>
+<span class="text-xs font-bold">0.4%</span>
+</div>
+<div class="bg-surface-container-low px-3 py-1.5 rounded-full flex items-center gap-2">
+<span class="text-[10px] text-on-surface-variant font-medium">Lead</span>
+<span class="text-xs font-bold">4d</span>
+</div>
+</div>
+</div>
+<!-- Card 5: PowerCell Lab -->
+<div class="bg-surface-container-lowest rounded-xl p-5 shadow-sm relative overflow-hidden group">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h4 class="font-bold text-lg text-primary">PowerCell Lab</h4>
+<p class="text-xs text-on-surface-variant font-label">Battery Management Systems</p>
+</div>
+<span class="bg-emerald-100 text-emerald-700 px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider">Healthy</span>
+</div>
+<div class="h-[60px] flex items-center text-on-surface-variant/40 italic text-xs">Operations stable.</div>
+<div class="flex flex-wrap gap-2">
+<div class="bg-surface-container-low px-3 py-1.5 rounded-full flex items-center gap-2">
+<span class="text-[10px] text-on-surface-variant font-medium">On-Time</span>
+<span class="text-xs font-bold text-emerald-600">92%</span>
+</div>
+<div class="bg-surface-container-low px-3 py-1.5 rounded-full flex items-center gap-2">
+<span class="text-[10px] text-on-surface-variant font-medium">Defect</span>
+<span class="text-xs font-bold">0.9%</span>
+</div>
+<div class="bg-surface-container-low px-3 py-1.5 rounded-full flex items-center gap-2">
+<span class="text-[10px] text-on-surface-variant font-medium">Lead</span>
+<span class="text-xs font-bold">7d</span>
+</div>
+</div>
+</div>
+<!-- Card 6: Bharat Fiber -->
+<div class="bg-surface-container-lowest rounded-xl p-5 shadow-sm relative overflow-hidden group">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h4 class="font-bold text-lg text-primary">Bharat Fiber</h4>
+<p class="text-xs text-on-surface-variant font-label">Airframe Composites</p>
+</div>
+<span class="bg-amber-100 text-amber-700 px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider">Observation</span>
+</div>
+<div class="h-[60px] flex items-center text-on-surface-variant/40 italic text-xs">Logistic bottlenecks in Western region.</div>
+<div class="flex flex-wrap gap-2">
+<div class="bg-surface-container-low px-3 py-1.5 rounded-full flex items-center gap-2">
+<span class="text-[10px] text-on-surface-variant font-medium">On-Time</span>
+<span class="text-xs font-bold text-amber-600">79%</span>
+</div>
+<div class="bg-surface-container-low px-3 py-1.5 rounded-full flex items-center gap-2">
+<span class="text-[10px] text-on-surface-variant font-medium">Defect</span>
+<span class="text-xs font-bold">1.1%</span>
+</div>
+<div class="bg-surface-container-low px-3 py-1.5 rounded-full flex items-center gap-2">
+<span class="text-[10px] text-on-surface-variant font-medium">Lead</span>
+<span class="text-xs font-bold">14d</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Right Side Panel (40%) -->
+<aside class="w-[40%] space-y-6">
+<!-- Inventory Levels Section -->
+<div class="bg-surface-container-low rounded-xl p-6">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-headline text-xl font-bold text-primary">Inventory Levels</h3>
+<span class="text-xs font-label text-on-surface-variant">Live Telemetry</span>
+</div>
+<div class="space-y-6">
+<!-- STM32 -->
+<div class="space-y-2">
+<div class="flex justify-between items-center text-sm">
+<span class="font-medium">Microcontrollers STM32</span>
+<span class="text-emerald-600 font-bold">12 days stock</span>
+</div>
+<div class="w-full bg-surface-container-highest h-2 rounded-full overflow-hidden">
+<div class="bg-emerald-500 h-full w-[60%]"></div>
+</div>
+</div>
+<!-- BLDC Motors -->
+<div class="space-y-2">
+<div class="flex justify-between items-center text-sm">
+<div class="flex items-center gap-2">
+<span class="font-medium">BLDC Motors</span>
+<span class="material-symbols-outlined text-red-600 text-sm" data-icon="error">error</span>
+</div>
+<span class="text-red-600 font-bold">4 days (Critical)</span>
+</div>
+<div class="w-full bg-surface-container-highest h-2 rounded-full overflow-hidden">
+<div class="bg-red-500 h-full w-[20%]"></div>
+</div>
+</div>
+<!-- IMU Sensors -->
+<div class="space-y-2">
+<div class="flex justify-between items-center text-sm">
+<span class="font-medium">IMU Sensors</span>
+<span class="text-amber-600 font-bold">8 days stock</span>
+</div>
+<div class="w-full bg-surface-container-highest h-2 rounded-full overflow-hidden">
+<div class="bg-amber-500 h-full w-[40%]"></div>
+</div>
+</div>
+<!-- LiPo Battery -->
+<div class="space-y-2">
+<div class="flex justify-between items-center text-sm">
+<span class="font-medium">LiPo Battery Cells</span>
+<span class="text-emerald-600 font-bold">18 days stock</span>
+</div>
+<div class="w-full bg-surface-container-highest h-2 rounded-full overflow-hidden">
+<div class="bg-emerald-500 h-full w-[85%]"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Procurement Cost Simulator -->
+<div class="bg-surface-container-lowest rounded-xl p-6 shadow-sm border border-outline-variant/15">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-on-tertiary-container" data-icon="calculate">calculate</span>
+<h3 class="font-headline text-xl font-bold text-primary">Cost Simulator</h3>
+</div>
+<div class="grid grid-cols-2 gap-4 mb-6">
+<div class="space-y-1.5">
+<label class="text-[10px] font-bold uppercase tracking-wider text-on-surface-variant ml-1">Component</label>
+<select class="w-full bg-surface-container-low border-none rounded-lg text-sm focus:ring-1 focus:ring-primary">
+<option>MCU-2024 (STM32)</option>
+<option>BLDC Core 2212</option>
+</select>
+</div>
+<div class="space-y-1.5">
+<label class="text-[10px] font-bold uppercase tracking-wider text-on-surface-variant ml-1">Target Vendor</label>
+<select class="w-full bg-surface-container-low border-none rounded-lg text-sm focus:ring-1 focus:ring-primary">
+<option>Alternate Vendor B</option>
+<option>ElectroPro</option>
+</select>
+</div>
+<div class="col-span-2 space-y-1.5">
+<label class="text-[10px] font-bold uppercase tracking-wider text-on-surface-variant ml-1">Quantity</label>
+<input class="w-full bg-surface-container-low border-none rounded-lg text-sm focus:ring-1 focus:ring-primary" type="number" value="1200"/>
+</div>
+</div>
+<div class="space-y-3 pt-4 border-t border-outline-variant/15">
+<div class="flex justify-between items-center p-3 rounded-lg bg-surface-container-low">
+<span class="text-sm font-medium">Vendor A (ElectroPro)</span>
+<div class="text-right">
+<span class="block text-sm font-bold">₹1,44,000</span>
+<span class="text-[10px] text-on-surface-variant">Standard Rate</span>
+</div>
+</div>
+<div class="flex justify-between items-center p-3 rounded-lg border border-on-tertiary-container/30 bg-tertiary-container/5">
+<span class="text-sm font-medium">Vendor B (Swift Electronics)</span>
+<div class="text-right">
+<span class="block text-sm font-bold text-on-tertiary-container">₹1,52,400</span>
+<span class="text-[10px] text-on-tertiary-container font-semibold">+₹8,400 Delta</span>
+</div>
+</div>
+</div>
+<div class="mt-6 bg-tertiary-fixed/40 p-4 rounded-lg flex gap-3 items-start border border-on-tertiary-fixed-variant/10">
+<span class="material-symbols-outlined text-on-tertiary-container" data-icon="tips_and_updates" style="font-variation-settings: 'FILL' 1;">tips_and_updates</span>
+<div>
+<p class="text-xs text-on-tertiary-fixed-variant leading-relaxed">
+<span class="font-bold">AI Recommendation:</span> Accept Vendor B proposal. The cost increase is offset by preventing a 5-day drone assembly line halt estimated at ₹45,000.
+                        </p>
+</div>
+</div>
+<button class="w-full mt-6 cognitive-gradient text-white py-3 rounded-lg font-bold text-sm shadow-lg hover:shadow-primary/10 transition-shadow">
+                    Approve Procurement Pivot
+                </button>
+</div>
+</aside>
+</main>
+</body></html>

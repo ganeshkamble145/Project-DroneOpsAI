@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Downtime Alert Detail | DroneOpsAI</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-tint": "#545f73",
+                        "error-container": "#ffdad6",
+                        "surface-container-low": "#f3f4f6",
+                        "on-primary-container": "#8590a6",
+                        "secondary-container": "#d5e3fd",
+                        "on-background": "#191c1e",
+                        "inverse-surface": "#2e3132",
+                        "on-error-container": "#93000a",
+                        "tertiary-fixed": "#ffdbca",
+                        "on-tertiary-fixed-variant": "#783200",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-fixed-dim": "#ffb690",
+                        "on-primary-fixed": "#111c2d",
+                        "on-error": "#ffffff",
+                        "on-surface-variant": "#45474c",
+                        "on-tertiary-fixed": "#341100",
+                        "on-secondary-fixed-variant": "#3a485c",
+                        "surface-bright": "#f8f9fb",
+                        "surface-variant": "#e1e2e4",
+                        "outline-variant": "#c5c6cd",
+                        "tertiary-container": "#481b00",
+                        "secondary": "#515f74",
+                        "primary-fixed-dim": "#bcc7de",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary-container": "#eb6905",
+                        "secondary-fixed-dim": "#b9c7e0",
+                        "primary-container": "#1e293b",
+                        "background": "#f8f9fb",
+                        "surface-container": "#edeef0",
+                        "primary-fixed": "#d8e3fb",
+                        "on-primary-fixed-variant": "#3c475a",
+                        "primary": "#091426",
+                        "on-secondary-container": "#57657b",
+                        "inverse-on-surface": "#f0f1f3",
+                        "surface-container-highest": "#e1e2e4",
+                        "on-surface": "#191c1e",
+                        "surface": "#f8f9fb",
+                        "surface-dim": "#d9dadc",
+                        "on-secondary-fixed": "#0d1c2f",
+                        "outline": "#75777d",
+                        "on-tertiary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "surface-container-high": "#e7e8ea",
+                        "on-primary": "#ffffff",
+                        "secondary-fixed": "#d5e3fd",
+                        "inverse-primary": "#bcc7de",
+                        "tertiary": "#280c00"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .cognitive-gradient {
+            background: linear-gradient(135deg, #091426 0%, #1e293b 100%);
+        }
+        .glass-blur {
+            backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body class="bg-background font-body text-on-surface min-h-screen">
+<!-- Dashboard Background (Visual Context) -->
+<div class="fixed inset-0 z-0 flex">
+<!-- SideNavBar Shared Component Simulation -->
+<aside class="hidden md:flex fixed left-0 top-0 h-full w-64 flex-col pt-16 bg-slate-50/80 dark:bg-slate-900/80 backdrop-blur-md border-r border-slate-200/15">
+<div class="px-6 mb-8">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">warehouse</span>
+</div>
+<div>
+<p class="text-sm font-bold font-headline">Plant 1</p>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-wider">Bengaluru, KA</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 px-4 space-y-1">
+<div class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-500"><span class="material-symbols-outlined">inventory_2</span><span class="text-sm font-semibold">Inventory</span></div>
+<div class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-500"><span class="material-symbols-outlined">handshake</span><span class="text-sm font-semibold">Suppliers</span></div>
+<div class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-500"><span class="material-symbols-outlined">local_shipping</span><span class="text-sm font-semibold">Shipments</span></div>
+<div class="flex items-center gap-3 px-4 py-3 rounded-lg bg-slate-200/50 text-slate-900 border-l-4 border-orange-700"><span class="material-symbols-outlined">warehouse</span><span class="text-sm font-semibold">Warehousing</span></div>
+<div class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-500"><span class="material-symbols-outlined">assessment</span><span class="text-sm font-semibold">Reports</span></div>
+</nav>
+</aside>
+<!-- Main Dashboard Content Underlay -->
+<main class="flex-1 ml-64 p-8 opacity-40">
+<header class="flex justify-between items-center mb-10">
+<h1 class="text-4xl font-headline font-bold tracking-tight">Dashboard Overview</h1>
+</header>
+<div class="grid grid-cols-3 gap-6">
+<div class="h-64 bg-surface-container-low rounded-xl"></div>
+<div class="h-64 bg-surface-container-low rounded-xl"></div>
+<div class="h-64 bg-surface-container-low rounded-xl"></div>
+<div class="col-span-2 h-96 bg-surface-container-low rounded-xl"></div>
+<div class="h-96 bg-surface-container-low rounded-xl"></div>
+</div>
+</main>
+</div>
+<!-- Right-Side Slide-Over Drawer Overlay -->
+<div class="fixed inset-0 z-50 flex justify-end bg-primary/20 backdrop-blur-sm">
+<div class="w-full max-w-2xl bg-surface h-full shadow-2xl flex flex-col animate-slide-in">
+<!-- Header Section -->
+<header class="p-6 bg-surface-bright flex flex-col gap-4">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-3">
+<div class="p-2 bg-on-tertiary-container/10 rounded-lg">
+<span class="material-symbols-outlined text-on-tertiary-container" style="font-variation-settings: 'FILL' 1;">warning</span>
+</div>
+<h2 class="text-xl font-headline font-bold text-primary">AI Maintenance Alert — Soldering Machine SM-04</h2>
+</div>
+<button class="p-2 hover:bg-surface-container-high rounded-full transition-colors">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div class="flex items-center gap-4">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary-container text-on-secondary-container text-xs font-bold uppercase tracking-wider">
+<span class="material-symbols-outlined text-[14px]">psychology</span>
+                        92% Confidence
+                    </span>
+<span class="text-xs text-on-surface-variant font-medium">Criticality: High • Priority 1</span>
+</div>
+</header>
+<!-- Scrollable Body -->
+<div class="flex-1 overflow-y-auto px-6 py-4 space-y-8">
+<!-- Section 1: Predicted Issue -->
+<section>
+<div class="flex items-center gap-2 mb-4">
+<div class="w-1 h-4 bg-tertiary-container rounded-full"></div>
+<h3 class="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Predicted Issue</h3>
+</div>
+<div class="grid grid-cols-3 gap-4">
+<!-- Sensor Card 1 -->
+<div class="p-4 bg-surface-container-lowest rounded-xl shadow-[0_4px_12px_rgba(9,20,38,0.04)] border-l-4 border-error">
+<p class="text-[10px] font-bold text-on-surface-variant uppercase mb-1">Temperature</p>
+<p class="text-2xl font-headline font-bold text-error">187°C</p>
+<p class="text-[10px] text-on-surface-variant mt-1">Threshold: 180°C</p>
+</div>
+<!-- Sensor Card 2 -->
+<div class="p-4 bg-surface-container-lowest rounded-xl shadow-[0_4px_12px_rgba(9,20,38,0.04)] border-l-4 border-on-tertiary-container">
+<p class="text-[10px] font-bold text-on-surface-variant uppercase mb-1">Vibration Index</p>
+<p class="text-2xl font-headline font-bold text-on-tertiary-container">3.2</p>
+<p class="text-[10px] text-on-surface-variant mt-1">Target: &lt; 2.5</p>
+</div>
+<!-- Sensor Card 3 -->
+<div class="p-4 bg-surface-container-lowest rounded-xl shadow-[0_4px_12px_rgba(9,20,38,0.04)] border-l-4 border-secondary">
+<p class="text-[10px] font-bold text-on-surface-variant uppercase mb-1">Runtime</p>
+<p class="text-2xl font-headline font-bold text-primary">847hrs</p>
+<p class="text-[10px] text-on-surface-variant mt-1">Service due: 850hrs</p>
+</div>
+</div>
+<p class="mt-4 text-sm text-on-surface-variant leading-relaxed">
+                        AI Model <span class="font-bold text-primary">SENTINEL-X</span> predicts heater element failure within <span class="font-bold text-error">2.4 hours</span> based on current thermal fluctuations and vibration patterns.
+                    </p>
+</section>
+<!-- Section 2: AI Recommendation -->
+<section>
+<div class="flex items-center gap-2 mb-4">
+<div class="w-1 h-4 bg-tertiary-container rounded-full"></div>
+<h3 class="text-xs font-bold uppercase tracking-widest text-on-surface-variant">AI Recommendation</h3>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<!-- Option A -->
+<div class="relative p-5 bg-surface-container-lowest rounded-xl border-2 border-primary-container ring-4 ring-primary-fixed/30 cursor-pointer transition-all">
+<div class="absolute top-3 right-3 text-primary-container">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<p class="text-xs font-bold text-primary-container uppercase mb-3">Option A</p>
+<h4 class="text-sm font-bold text-primary mb-4">Dispatch Technician + Calibration</h4>
+<div class="space-y-2">
+<div class="flex justify-between text-xs">
+<span class="text-on-surface-variant">Est. Downtime</span>
+<span class="font-bold text-primary">45 min</span>
+</div>
+<div class="flex justify-between text-xs">
+<span class="text-on-surface-variant">Cost Impact</span>
+<span class="font-bold text-primary">₹12,000</span>
+</div>
+<div class="mt-4 pt-3 border-t border-outline-variant/20">
+<span class="text-[10px] text-green-600 font-bold uppercase">Success Rate: 98%</span>
+</div>
+</div>
+</div>
+<!-- Option B -->
+<div class="p-5 bg-surface-container-low rounded-xl border border-transparent hover:border-outline-variant cursor-pointer transition-all">
+<p class="text-xs font-bold text-on-surface-variant uppercase mb-3">Option B</p>
+<h4 class="text-sm font-bold text-primary mb-4">Defer 4hrs + Monitor</h4>
+<div class="space-y-2">
+<div class="flex justify-between text-xs">
+<span class="text-on-surface-variant">Est. Downtime</span>
+<span class="font-bold text-primary">None immediate</span>
+</div>
+<div class="flex justify-between text-xs">
+<span class="text-on-surface-variant">Risk Factor</span>
+<span class="font-bold text-error">Extreme</span>
+</div>
+<div class="mt-4 pt-3 border-t border-outline-variant/20 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-error">flag</span>
+<span class="text-[10px] text-error font-bold uppercase">Critical failure risk</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 3: Impact on Schedule -->
+<section>
+<div class="flex items-center gap-2 mb-4">
+<div class="w-1 h-4 bg-tertiary-container rounded-full"></div>
+<h3 class="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Impact on Schedule</h3>
+</div>
+<div class="bg-surface-container-low rounded-xl p-4 overflow-hidden">
+<div class="flex justify-between items-center mb-4">
+<span class="text-[10px] font-bold text-on-surface-variant uppercase">Affected Production Batches</span>
+<span class="text-[10px] font-medium text-on-surface-variant">Shift: B (Afternoon)</span>
+</div>
+<!-- Mini Gantt Chart -->
+<div class="relative space-y-4">
+<div class="flex items-center gap-4">
+<span class="w-16 text-[10px] font-bold text-on-surface-variant">B-9401</span>
+<div class="flex-1 h-6 bg-surface-container-highest rounded-full relative overflow-hidden">
+<div class="absolute inset-0 bg-primary-container w-[40%] rounded-l-full"></div>
+<div class="absolute left-[40%] top-0 bottom-0 w-[15%] bg-error/40 border-x border-error/50 flex items-center justify-center">
+<span class="text-[8px] text-white font-bold">REPAIR</span>
+</div>
+<div class="absolute left-[55%] top-0 bottom-0 w-[45%] bg-primary-container/20 border-l border-primary-container/30"></div>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<span class="w-16 text-[10px] font-bold text-on-surface-variant">B-9402</span>
+<div class="flex-1 h-6 bg-surface-container-highest rounded-full relative overflow-hidden">
+<div class="absolute left-[55%] top-0 bottom-0 w-[30%] bg-primary-container/20"></div>
+<div class="absolute left-[85%] top-0 bottom-0 w-[15%] bg-error-container/50 border-x border-error/20 flex items-center justify-center">
+<span class="text-[8px] text-error font-bold">DELAY</span>
+</div>
+</div>
+</div>
+<!-- Time Markers -->
+<div class="flex justify-between px-20 pt-2 border-t border-outline-variant/30 mt-2">
+<span class="text-[8px] text-on-surface-variant">12:00</span>
+<span class="text-[8px] text-on-surface-variant">14:00</span>
+<span class="text-[8px] text-on-surface-variant">16:00</span>
+<span class="text-[8px] text-on-surface-variant">18:00</span>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Bottom Action Bar & Chat -->
+<footer class="p-6 bg-surface-bright space-y-4 border-t border-outline-variant/20">
+<!-- AI Chat Input -->
+<div class="relative flex items-center">
+<span class="absolute left-3 material-symbols-outlined text-on-primary-container text-lg">auto_awesome</span>
+<input class="w-full pl-10 pr-4 py-3 bg-surface-container-low border-none rounded-xl text-sm focus:ring-2 focus:ring-primary-fixed-dim transition-all" placeholder="Ask AI about this alert…" type="text"/>
+</div>
+<div class="flex flex-col gap-3">
+<button class="w-full cognitive-gradient text-white py-4 rounded-xl font-bold text-sm hover:opacity-90 transition-opacity flex items-center justify-center gap-2">
+                        Approve Recommended Action
+                        <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+<button class="w-full text-on-surface-variant text-xs font-bold uppercase tracking-widest py-2 hover:text-primary transition-colors">
+                        Override
+                    </button>
+</div>
+</footer>
+</div>
+</div>
+<!-- TopNavBar Shared Component Simulation -->
+<nav class="fixed top-0 left-0 right-0 z-[60] bg-slate-50/70 dark:bg-slate-900/70 backdrop-blur-xl flex justify-between items-center w-full px-6 py-3">
+<div class="flex items-center gap-2 text-xl font-bold text-slate-900 font-headline">
+<span class="material-symbols-outlined text-primary-container">polyline</span>
+            DroneOpsAI
+        </div>
+<div class="hidden md:flex gap-8 items-center">
+<a class="font-headline text-sm font-medium tracking-tight text-slate-500 hover:text-orange-500 transition-colors" href="#">Dashboard</a>
+<a class="font-headline text-sm font-medium tracking-tight text-slate-500 hover:text-orange-500 transition-colors" href="#">Analytics</a>
+<a class="font-headline text-sm font-medium tracking-tight text-slate-900 border-b-2 border-orange-600 pb-1" href="#">Logistics</a>
+<a class="font-headline text-sm font-medium tracking-tight text-slate-500 hover:text-orange-500 transition-colors" href="#">Fleet</a>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-slate-900">notifications</span>
+<img alt="User profile" class="w-8 h-8 rounded-full object-cover" data-alt="professional portrait of an operations manager with a confident and focused expression in a modern office setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCM4XJuqkzA-dD0TybmmypOafJkWXVskweYGrrPyNOWF2plFuNxvO-hQWFj1sdwJVPfLYg9cWwZfloNYTMll82pVaRPRQs9A0WnTIGnwQ79SdNAneyrXb2JMu4V5DZ0P0M7vJLRWimx0d4daG6JHsMzsRsnD7XEgTB0GmdWyaJgj-DZKoHH0nGCVQ_d7vjZoWwMbcXsX1tj3xUQrD0zGDcrpXx7kSwFVU-V9lKjThBlqKciDyclqReMX907BgH6FUhhq3G9VfxlGds"/>
+</div>
+</nav>
+</body></html>
